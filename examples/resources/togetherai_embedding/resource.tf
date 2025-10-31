@@ -1,0 +1,4 @@
+resource "togetherai_embedding" "example_embedding" {
+  input = "Our solar system orbits the Milky Way galaxy at about 515,000 mph"
+  model = "togethercomputer/m2-bert-80M-8k-retrieval"
+}
