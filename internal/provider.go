@@ -121,6 +121,7 @@ func (p *TogetheraiProvider) Resources(ctx context.Context) []func() resource.Re
 		audio_translation.NewResource,
 		endpoint.NewResource,
 		batch.NewResource,
+		eval.NewResource,
 	}
 }
 
