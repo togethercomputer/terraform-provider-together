@@ -50,13 +50,32 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 					"judge": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"model_name": schema.StringAttribute{
+							"model": schema.StringAttribute{
 								Description: "Name of the judge model",
 								Required:    true,
+							},
+							"model_source": schema.StringAttribute{
+								Description: "Source of the judge model.\nAvailable values: \"serverless\", \"dedicated\", \"external\".",
+								Required:    true,
+								Validators: []validator.String{
+									stringvalidator.OneOfCaseInsensitive(
+										"serverless",
+										"dedicated",
+										"external",
+									),
+								},
 							},
 							"system_template": schema.StringAttribute{
 								Description: "System prompt template for the judge",
 								Required:    true,
+							},
+							"external_api_token": schema.StringAttribute{
+								Description: "Bearer/API token for external judge models.",
+								Optional:    true,
+							},
+							"external_base_url": schema.StringAttribute{
+								Description: "Base URL for external judge models. Must be OpenAI-compatible base URL.",
+								Optional:    true,
 							},
 						},
 					},
