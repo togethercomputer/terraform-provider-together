@@ -46,8 +46,11 @@ type EvalParametersModel struct {
 }
 
 type EvalParametersJudgeModel struct {
-	ModelName      types.String `tfsdk:"model_name" json:"model_name,required"`
-	SystemTemplate types.String `tfsdk:"system_template" json:"system_template,required"`
+	Model            types.String `tfsdk:"model" json:"model,required"`
+	ModelSource      types.String `tfsdk:"model_source" json:"model_source,required"`
+	SystemTemplate   types.String `tfsdk:"system_template" json:"system_template,required"`
+	ExternalAPIToken types.String `tfsdk:"external_api_token" json:"external_api_token,optional"`
+	ExternalBaseURL  types.String `tfsdk:"external_base_url" json:"external_base_url,optional"`
 }
 
 type EvalStatusUpdatesModel struct {
