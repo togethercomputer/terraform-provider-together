@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package fine_tune
+package fine_tuning
 
 import (
 	"context"
@@ -18,24 +18,24 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
-var _ resource.ResourceWithConfigure = (*FineTuneResource)(nil)
-var _ resource.ResourceWithModifyPlan = (*FineTuneResource)(nil)
-var _ resource.ResourceWithImportState = (*FineTuneResource)(nil)
+var _ resource.ResourceWithConfigure = (*FineTuningResource)(nil)
+var _ resource.ResourceWithModifyPlan = (*FineTuningResource)(nil)
+var _ resource.ResourceWithImportState = (*FineTuningResource)(nil)
 
 func NewResource() resource.Resource {
-	return &FineTuneResource{}
+	return &FineTuningResource{}
 }
 
-// FineTuneResource defines the resource implementation.
-type FineTuneResource struct {
+// FineTuningResource defines the resource implementation.
+type FineTuningResource struct {
 	client *together.Client
 }
 
-func (r *FineTuneResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_fine_tune"
+func (r *FineTuningResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_fine_tuning"
 }
 
-func (r *FineTuneResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *FineTuningResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -54,8 +54,8 @@ func (r *FineTuneResource) Configure(ctx context.Context, req resource.Configure
 	r.client = client
 }
 
-func (r *FineTuneResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data *FineTuneModel
+func (r *FineTuningResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data *FineTuningModel
 
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 
@@ -69,9 +69,9 @@ func (r *FineTuneResource) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 	res := new(http.Response)
-	_, err = r.client.FineTune.New(
+	_, err = r.client.FineTuning.New(
 		ctx,
-		together.FineTuneNewParams{},
+		together.FineTuningNewParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
@@ -90,12 +90,12 @@ func (r *FineTuneResource) Create(ctx context.Context, req resource.CreateReques
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *FineTuneResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+func (r *FineTuningResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	// Update is not supported for this resource
 }
 
-func (r *FineTuneResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data *FineTuneModel
+func (r *FineTuningResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data *FineTuningModel
 
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 
@@ -104,7 +104,7 @@ func (r *FineTuneResource) Read(ctx context.Context, req resource.ReadRequest, r
 	}
 
 	res := new(http.Response)
-	_, err := r.client.FineTune.Get(
+	_, err := r.client.FineTuning.Get(
 		ctx,
 		data.ID.ValueString(),
 		option.WithResponseBodyInto(&res),
@@ -129,8 +129,8 @@ func (r *FineTuneResource) Read(ctx context.Context, req resource.ReadRequest, r
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *FineTuneResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data *FineTuneModel
+func (r *FineTuningResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data *FineTuningModel
 
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 
@@ -138,10 +138,10 @@ func (r *FineTuneResource) Delete(ctx context.Context, req resource.DeleteReques
 		return
 	}
 
-	_, err := r.client.FineTune.Delete(
+	_, err := r.client.FineTuning.Delete(
 		ctx,
 		data.ID.ValueString(),
-		together.FineTuneDeleteParams{},
+		together.FineTuningDeleteParams{},
 		option.WithMiddleware(logging.Middleware(ctx)),
 	)
 	if err != nil {
@@ -152,8 +152,8 @@ func (r *FineTuneResource) Delete(ctx context.Context, req resource.DeleteReques
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *FineTuneResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	var data *FineTuneModel = new(FineTuneModel)
+func (r *FineTuningResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+	var data *FineTuningModel = new(FineTuningModel)
 
 	path := ""
 	diags := importpath.ParseImportID(
@@ -169,7 +169,7 @@ func (r *FineTuneResource) ImportState(ctx context.Context, req resource.ImportS
 	data.ID = types.StringValue(path)
 
 	res := new(http.Response)
-	_, err := r.client.FineTune.Get(
+	_, err := r.client.FineTuning.Get(
 		ctx,
 		path,
 		option.WithResponseBodyInto(&res),
@@ -189,6 +189,6 @@ func (r *FineTuneResource) ImportState(ctx context.Context, req resource.ImportS
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *FineTuneResource) ModifyPlan(_ context.Context, _ resource.ModifyPlanRequest, _ *resource.ModifyPlanResponse) {
+func (r *FineTuningResource) ModifyPlan(_ context.Context, _ resource.ModifyPlanRequest, _ *resource.ModifyPlanResponse) {
 
 }

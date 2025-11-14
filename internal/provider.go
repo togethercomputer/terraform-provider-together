@@ -22,7 +22,7 @@ import (
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/endpoint"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/eval"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/file"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/fine_tune"
+	"github.com/stainless-sdks/togetherai-terraform/internal/services/fine_tuning"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/image"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/job"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/video"
@@ -113,7 +113,7 @@ func (p *TogetheraiProvider) Resources(ctx context.Context) []func() resource.Re
 		chat_completion.NewResource,
 		completion.NewResource,
 		embedding.NewResource,
-		fine_tune.NewResource,
+		fine_tuning.NewResource,
 		image.NewResource,
 		video.NewResource,
 		audio.NewResource,
@@ -128,7 +128,7 @@ func (p *TogetheraiProvider) Resources(ctx context.Context) []func() resource.Re
 func (p *TogetheraiProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		file.NewFileDataSource,
-		fine_tune.NewFineTuneDataSource,
+		fine_tuning.NewFineTuningDataSource,
 		video.NewVideoDataSource,
 		job.NewJobDataSource,
 		endpoint.NewEndpointDataSource,

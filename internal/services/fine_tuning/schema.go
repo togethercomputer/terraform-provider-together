@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package fine_tune
+package fine_tuning
 
 import (
 	"context"
@@ -23,7 +23,7 @@ import (
 	"github.com/stainless-sdks/togetherai-terraform/internal/customvalidator"
 )
 
-var _ resource.ResourceWithConfigValidators = (*FineTuneResource)(nil)
+var _ resource.ResourceWithConfigValidators = (*FineTuningResource)(nil)
 
 func ResourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
@@ -151,7 +151,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Description: "The learning rate scheduler to use. It specifies how the learning rate is adjusted during training.",
 				Computed:    true,
 				Optional:    true,
-				CustomType:  customfield.NewNestedObjectType[FineTuneLrSchedulerModel](ctx),
+				CustomType:  customfield.NewNestedObjectType[FineTuningLrSchedulerModel](ctx),
 				Attributes: map[string]schema.Attribute{
 					"lr_scheduler_type": schema.StringAttribute{
 						Description: `Available values: "linear", "cosine".`,
@@ -163,7 +163,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 					"lr_scheduler_args": schema.SingleNestedAttribute{
 						Computed:   true,
 						Optional:   true,
-						CustomType: customfield.NewNestedObjectType[FineTuneLrSchedulerLrSchedulerArgsModel](ctx),
+						CustomType: customfield.NewNestedObjectType[FineTuningLrSchedulerLrSchedulerArgsModel](ctx),
 						Attributes: map[string]schema.Attribute{
 							"min_lr_ratio": schema.Float64Attribute{
 								Description: "The ratio of the final learning rate to the peak learning rate",
@@ -186,7 +186,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Description: "The training method to use. 'sft' for Supervised Fine-Tuning or 'dpo' for Direct Preference Optimization.",
 				Computed:    true,
 				Optional:    true,
-				CustomType:  customfield.NewNestedObjectType[FineTuneTrainingMethodModel](ctx),
+				CustomType:  customfield.NewNestedObjectType[FineTuningTrainingMethodModel](ctx),
 				Attributes: map[string]schema.Attribute{
 					"method": schema.StringAttribute{
 						Description: `Available values: "sft", "dpo".`,
@@ -236,7 +236,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"training_type": schema.SingleNestedAttribute{
 				Computed:   true,
 				Optional:   true,
-				CustomType: customfield.NewNestedObjectType[FineTuneTrainingTypeModel](ctx),
+				CustomType: customfield.NewNestedObjectType[FineTuningTrainingTypeModel](ctx),
 				Attributes: map[string]schema.Attribute{
 					"type": schema.StringAttribute{
 						Description: `Available values: "Full", "Lora".`,
@@ -354,7 +354,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			},
 			"events": schema.ListNestedAttribute{
 				Computed:   true,
-				CustomType: customfield.NewNestedObjectListType[FineTuneEventsModel](ctx),
+				CustomType: customfield.NewNestedObjectListType[FineTuningEventsModel](ctx),
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"checkpoint_path": schema.StringAttribute{
@@ -451,10 +451,10 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 	}
 }
 
-func (r *FineTuneResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *FineTuningResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = ResourceSchema(ctx)
 }
 
-func (r *FineTuneResource) ConfigValidators(_ context.Context) []resource.ConfigValidator {
+func (r *FineTuningResource) ConfigValidators(_ context.Context) []resource.ConfigValidator {
 	return []resource.ConfigValidator{}
 }
