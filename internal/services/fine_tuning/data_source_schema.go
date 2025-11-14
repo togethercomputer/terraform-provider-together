@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package fine_tune
+package fine_tuning
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 	"github.com/stainless-sdks/togetherai-terraform/internal/customvalidator"
 )
 
-var _ datasource.DataSourceWithConfigValidators = (*FineTuneDataSource)(nil)
+var _ datasource.DataSourceWithConfigValidators = (*FineTuningDataSource)(nil)
 
 func DataSourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
@@ -125,7 +125,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			},
 			"events": schema.ListNestedAttribute{
 				Computed:   true,
-				CustomType: customfield.NewNestedObjectListType[FineTuneEventsDataSourceModel](ctx),
+				CustomType: customfield.NewNestedObjectListType[FineTuningEventsDataSourceModel](ctx),
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"checkpoint_path": schema.StringAttribute{
@@ -220,7 +220,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			},
 			"lr_scheduler": schema.SingleNestedAttribute{
 				Computed:   true,
-				CustomType: customfield.NewNestedObjectType[FineTuneLrSchedulerDataSourceModel](ctx),
+				CustomType: customfield.NewNestedObjectType[FineTuningLrSchedulerDataSourceModel](ctx),
 				Attributes: map[string]schema.Attribute{
 					"lr_scheduler_type": schema.StringAttribute{
 						Description: `Available values: "linear", "cosine".`,
@@ -231,7 +231,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 					},
 					"lr_scheduler_args": schema.SingleNestedAttribute{
 						Computed:   true,
-						CustomType: customfield.NewNestedObjectType[FineTuneLrSchedulerLrSchedulerArgsDataSourceModel](ctx),
+						CustomType: customfield.NewNestedObjectType[FineTuningLrSchedulerLrSchedulerArgsDataSourceModel](ctx),
 						Attributes: map[string]schema.Attribute{
 							"min_lr_ratio": schema.Float64Attribute{
 								Description: "The ratio of the final learning rate to the peak learning rate",
@@ -247,7 +247,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			},
 			"training_method": schema.SingleNestedAttribute{
 				Computed:   true,
-				CustomType: customfield.NewNestedObjectType[FineTuneTrainingMethodDataSourceModel](ctx),
+				CustomType: customfield.NewNestedObjectType[FineTuningTrainingMethodDataSourceModel](ctx),
 				Attributes: map[string]schema.Attribute{
 					"method": schema.StringAttribute{
 						Description: `Available values: "sft", "dpo".`,
@@ -283,7 +283,7 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			},
 			"training_type": schema.SingleNestedAttribute{
 				Computed:   true,
-				CustomType: customfield.NewNestedObjectType[FineTuneTrainingTypeDataSourceModel](ctx),
+				CustomType: customfield.NewNestedObjectType[FineTuningTrainingTypeDataSourceModel](ctx),
 				Attributes: map[string]schema.Attribute{
 					"type": schema.StringAttribute{
 						Description: `Available values: "Full", "Lora".`,
@@ -324,10 +324,10 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 	}
 }
 
-func (d *FineTuneDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *FineTuningDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = DataSourceSchema(ctx)
 }
 
-func (d *FineTuneDataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
+func (d *FineTuningDataSource) ConfigValidators(_ context.Context) []datasource.ConfigValidator {
 	return []datasource.ConfigValidator{}
 }

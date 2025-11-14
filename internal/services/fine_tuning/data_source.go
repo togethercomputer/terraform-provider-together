@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package fine_tune
+package fine_tuning
 
 import (
 	"context"
@@ -15,21 +15,21 @@ import (
 	"github.com/togethercomputer/together-go/option"
 )
 
-type FineTuneDataSource struct {
+type FineTuningDataSource struct {
 	client *together.Client
 }
 
-var _ datasource.DataSourceWithConfigure = (*FineTuneDataSource)(nil)
+var _ datasource.DataSourceWithConfigure = (*FineTuningDataSource)(nil)
 
-func NewFineTuneDataSource() datasource.DataSource {
-	return &FineTuneDataSource{}
+func NewFineTuningDataSource() datasource.DataSource {
+	return &FineTuningDataSource{}
 }
 
-func (d *FineTuneDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_fine_tune"
+func (d *FineTuningDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_fine_tuning"
 }
 
-func (d *FineTuneDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
+func (d *FineTuningDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -48,8 +48,8 @@ func (d *FineTuneDataSource) Configure(ctx context.Context, req datasource.Confi
 	d.client = client
 }
 
-func (d *FineTuneDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data *FineTuneDataSourceModel
+func (d *FineTuningDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var data *FineTuningDataSourceModel
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
@@ -58,7 +58,7 @@ func (d *FineTuneDataSource) Read(ctx context.Context, req datasource.ReadReques
 	}
 
 	res := new(http.Response)
-	_, err := d.client.FineTune.Get(
+	_, err := d.client.FineTuning.Get(
 		ctx,
 		data.ID.ValueString(),
 		option.WithResponseBodyInto(&res),

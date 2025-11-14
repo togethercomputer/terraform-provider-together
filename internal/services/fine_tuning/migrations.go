@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package fine_tune
+package fine_tuning
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 )
 
-var _ resource.ResourceWithUpgradeState = (*FineTuneResource)(nil)
+var _ resource.ResourceWithUpgradeState = (*FineTuningResource)(nil)
 
-func (r *FineTuneResource) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
+func (r *FineTuningResource) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
 	return map[int64]resource.StateUpgrader{}
 }

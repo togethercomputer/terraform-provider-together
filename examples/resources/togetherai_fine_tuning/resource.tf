@@ -1,4 +1,4 @@
-resource "togetherai_fine_tune" "example_fine_tune" {
+resource "togetherai_fine_tuning" "example_fine_tuning" {
   model = "model"
   training_file = "training_file"
   batch_size = 0
