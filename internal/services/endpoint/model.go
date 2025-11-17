@@ -10,7 +10,6 @@ import (
 
 type EndpointModel struct {
 	ID                         types.String              `tfsdk:"id" json:"id,computed"`
-	EndpointID                 types.String              `tfsdk:"endpoint_id" path:"endpointId,optional"`
 	Hardware                   types.String              `tfsdk:"hardware" json:"hardware,required"`
 	Model                      types.String              `tfsdk:"model" json:"model,required"`
 	DisablePromptCache         types.Bool                `tfsdk:"disable_prompt_cache" json:"disable_prompt_cache,computed_optional,no_refresh"`

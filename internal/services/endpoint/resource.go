@@ -206,7 +206,7 @@ func (r *EndpointResource) ImportState(ctx context.Context, req resource.ImportS
 		return
 	}
 
-	data.EndpointID = types.StringValue(path)
+	data.ID = types.StringValue(path)
 
 	res := new(http.Response)
 	_, err := r.client.Endpoints.Get(
