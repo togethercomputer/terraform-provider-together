@@ -134,7 +134,7 @@ func (r *VideoResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 }
 
 func (r *VideoResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	var data *VideoModel = new(VideoModel)
+	var data = new(VideoModel)
 
 	path := ""
 	diags := importpath.ParseImportID(

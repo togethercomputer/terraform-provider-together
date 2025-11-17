@@ -193,7 +193,7 @@ func (r *EndpointResource) Delete(ctx context.Context, req resource.DeleteReques
 }
 
 func (r *EndpointResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	var data *EndpointModel = new(EndpointModel)
+	var data = new(EndpointModel)
 
 	path := ""
 	diags := importpath.ParseImportID(

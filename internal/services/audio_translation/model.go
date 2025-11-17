@@ -4,6 +4,7 @@ package audio_translation
 
 import (
 	"bytes"
+	"errors"
 	"mime/multipart"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -31,7 +32,9 @@ func (r AudioTranslationModel) MarshalMultipart() (data []byte, contentType stri
 	writer := multipart.NewWriter(buf)
 	err = apiform.MarshalRoot(r, writer)
 	if err != nil {
-		writer.Close()
+		if e := writer.Close(); e != nil {
+			err = errors.Join(err, e)
+		}
 		return nil, "", err
 	}
 	err = writer.Close()
