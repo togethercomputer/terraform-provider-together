@@ -153,7 +153,7 @@ func (r *FineTuningResource) Delete(ctx context.Context, req resource.DeleteRequ
 }
 
 func (r *FineTuningResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	var data *FineTuningModel = new(FineTuningModel)
+	var data = new(FineTuningModel)
 
 	path := ""
 	diags := importpath.ParseImportID(
