@@ -5,7 +5,6 @@ go 1.23.0
 toolchain go1.23.9
 
 require (
-	github.com/togethercomputer/together-go latest
 	github.com/davecgh/go-spew v1.1.1
 	github.com/hashicorp/terraform-plugin-docs v0.16.0
 	github.com/hashicorp/terraform-plugin-framework v1.15.0
@@ -16,6 +15,7 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.9.0
 	github.com/tidwall/gjson v1.18.0
 	github.com/tidwall/sjson v1.2.5
+	github.com/togethercomputer/together-go v0.1.0-alpha.2
 )
 
 require (
