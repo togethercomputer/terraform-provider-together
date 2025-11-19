@@ -14,10 +14,10 @@ type EndpointModel struct {
 	Model                      types.String              `tfsdk:"model" json:"model,required"`
 	DisablePromptCache         types.Bool                `tfsdk:"disable_prompt_cache" json:"disable_prompt_cache,computed_optional,no_refresh"`
 	DisableSpeculativeDecoding types.Bool                `tfsdk:"disable_speculative_decoding" json:"disable_speculative_decoding,computed_optional,no_refresh"`
-	Autoscaling                *EndpointAutoscalingModel `tfsdk:"autoscaling" json:"autoscaling,required"`
 	DisplayName                types.String              `tfsdk:"display_name" json:"display_name,optional"`
 	InactiveTimeout            types.Int64               `tfsdk:"inactive_timeout" json:"inactive_timeout,optional,no_refresh"`
-	State                      types.String              `tfsdk:"state" json:"state,computed_optional"`
+	State                      types.String              `tfsdk:"state" json:"state,optional"`
+	Autoscaling                *EndpointAutoscalingModel `tfsdk:"autoscaling" json:"autoscaling,optional"`
 	CreatedAt                  timetypes.RFC3339         `tfsdk:"created_at" json:"created_at,computed" format:"date-time"`
 	Name                       types.String              `tfsdk:"name" json:"name,computed"`
 	Object                     types.String              `tfsdk:"object" json:"object,computed"`
