@@ -36,6 +36,11 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Required:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
+			"availability_zone": schema.StringAttribute{
+				Description:   "Create the endpoint in a specified availability zone (e.g., us-central-4b)",
+				Optional:      true,
+				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
+			},
 			"disable_prompt_cache": schema.BoolAttribute{
 				Description:   "Whether to disable the prompt cache for this endpoint",
 				Computed:      true,
