@@ -12,6 +12,7 @@ type EndpointModel struct {
 	ID                         types.String              `tfsdk:"id" json:"id,computed"`
 	Hardware                   types.String              `tfsdk:"hardware" json:"hardware,required"`
 	Model                      types.String              `tfsdk:"model" json:"model,required"`
+	AvailabilityZone           types.String              `tfsdk:"availability_zone" json:"availability_zone,optional,no_refresh"`
 	DisablePromptCache         types.Bool                `tfsdk:"disable_prompt_cache" json:"disable_prompt_cache,computed_optional,no_refresh"`
 	DisableSpeculativeDecoding types.Bool                `tfsdk:"disable_speculative_decoding" json:"disable_speculative_decoding,computed_optional,no_refresh"`
 	DisplayName                types.String              `tfsdk:"display_name" json:"display_name,optional"`
