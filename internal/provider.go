@@ -24,6 +24,7 @@ import (
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/file"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/fine_tuning"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/job"
+	"github.com/stainless-sdks/togetherai-terraform/internal/services/rerank"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/video"
 	"github.com/togethercomputer/together-go"
 	"github.com/togethercomputer/together-go/option"
@@ -118,6 +119,7 @@ func (p *TogetheraiProvider) Resources(ctx context.Context) []func() resource.Re
 		audio_transcription.NewResource,
 		audio_translation.NewResource,
 		endpoint.NewResource,
+		rerank.NewResource,
 		batch.NewResource,
 		eval.NewResource,
 	}
