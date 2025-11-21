@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package audio
+package audio_speech
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 )
 
-var _ resource.ResourceWithUpgradeState = (*AudioResource)(nil)
+var _ resource.ResourceWithUpgradeState = (*AudioSpeechResource)(nil)
 
-func (r *AudioResource) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
+func (r *AudioSpeechResource) UpgradeState(ctx context.Context) map[int64]resource.StateUpgrader {
 	return map[int64]resource.StateUpgrader{}
 }

@@ -1,13 +1,13 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package audio
+package audio_speech
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/stainless-sdks/togetherai-terraform/internal/apijson"
 )
 
-type AudioModel struct {
+type AudioSpeechModel struct {
 	Input            types.String  `tfsdk:"input" json:"input,required"`
 	Model            types.String  `tfsdk:"model" json:"model,required"`
 	Voice            types.String  `tfsdk:"voice" json:"voice,required"`
@@ -18,10 +18,10 @@ type AudioModel struct {
 	SampleRate       types.Float64 `tfsdk:"sample_rate" json:"sample_rate,computed_optional"`
 }
 
-func (m AudioModel) MarshalJSON() (data []byte, err error) {
+func (m AudioSpeechModel) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(m)
 }
 
-func (m AudioModel) MarshalJSONForUpdate(state AudioModel) (data []byte, err error) {
+func (m AudioSpeechModel) MarshalJSONForUpdate(state AudioSpeechModel) (data []byte, err error) {
 	return apijson.MarshalForUpdate(m, state)
 }
