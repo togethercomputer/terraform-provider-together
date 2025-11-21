@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package audio
+package audio_speech
 
 import (
 	"context"
@@ -16,23 +16,23 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
-var _ resource.ResourceWithConfigure = (*AudioResource)(nil)
-var _ resource.ResourceWithModifyPlan = (*AudioResource)(nil)
+var _ resource.ResourceWithConfigure = (*AudioSpeechResource)(nil)
+var _ resource.ResourceWithModifyPlan = (*AudioSpeechResource)(nil)
 
 func NewResource() resource.Resource {
-	return &AudioResource{}
+	return &AudioSpeechResource{}
 }
 
-// AudioResource defines the resource implementation.
-type AudioResource struct {
+// AudioSpeechResource defines the resource implementation.
+type AudioSpeechResource struct {
 	client *together.Client
 }
 
-func (r *AudioResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_audio"
+func (r *AudioSpeechResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_audio_speech"
 }
 
-func (r *AudioResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *AudioSpeechResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -51,8 +51,8 @@ func (r *AudioResource) Configure(ctx context.Context, req resource.ConfigureReq
 	r.client = client
 }
 
-func (r *AudioResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data *AudioModel
+func (r *AudioSpeechResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data *AudioSpeechModel
 
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 
@@ -66,9 +66,9 @@ func (r *AudioResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 	res := new(http.Response)
-	_, err = r.client.Audio.New(
+	_, err = r.client.Audio.Speech.New(
 		ctx,
-		together.AudioNewParams{},
+		together.AudioSpeechNewParams{},
 		option.WithRequestBody("application/json", dataBytes),
 		option.WithResponseBodyInto(&res),
 		option.WithMiddleware(logging.Middleware(ctx)),
@@ -87,19 +87,19 @@ func (r *AudioResource) Create(ctx context.Context, req resource.CreateRequest, 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *AudioResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+func (r *AudioSpeechResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	// Update is not supported for this resource
 }
 
-func (r *AudioResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+func (r *AudioSpeechResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 
 }
 
-func (r *AudioResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+func (r *AudioSpeechResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
 }
 
-func (r *AudioResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
+func (r *AudioSpeechResource) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {
 	if req.State.Raw.IsNull() {
 		resp.Diagnostics.AddWarning(
 			"Resource Destruction Considerations",

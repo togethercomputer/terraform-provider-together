@@ -12,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/audio"
+	"github.com/stainless-sdks/togetherai-terraform/internal/services/audio_speech"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/audio_transcription"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/audio_translation"
 	"github.com/stainless-sdks/togetherai-terraform/internal/services/batch"
@@ -115,7 +115,7 @@ func (p *TogetheraiProvider) Resources(ctx context.Context) []func() resource.Re
 		embedding.NewResource,
 		fine_tuning.NewResource,
 		video.NewResource,
-		audio.NewResource,
+		audio_speech.NewResource,
 		audio_transcription.NewResource,
 		audio_translation.NewResource,
 		endpoint.NewResource,
