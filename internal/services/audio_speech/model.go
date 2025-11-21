@@ -8,14 +8,14 @@ import (
 )
 
 type AudioSpeechModel struct {
-	Input            types.String  `tfsdk:"input" json:"input,required"`
-	Model            types.String  `tfsdk:"model" json:"model,required"`
-	Voice            types.String  `tfsdk:"voice" json:"voice,required"`
-	Stream           types.Bool    `tfsdk:"stream" json:"stream,optional"`
-	Language         types.String  `tfsdk:"language" json:"language,computed_optional"`
-	ResponseEncoding types.String  `tfsdk:"response_encoding" json:"response_encoding,computed_optional"`
-	ResponseFormat   types.String  `tfsdk:"response_format" json:"response_format,computed_optional"`
-	SampleRate       types.Float64 `tfsdk:"sample_rate" json:"sample_rate,computed_optional"`
+	Input            types.String `tfsdk:"input" json:"input,required"`
+	Model            types.String `tfsdk:"model" json:"model,required"`
+	Voice            types.String `tfsdk:"voice" json:"voice,required"`
+	Stream           types.Bool   `tfsdk:"stream" json:"stream,optional"`
+	Language         types.String `tfsdk:"language" json:"language,computed_optional"`
+	ResponseEncoding types.String `tfsdk:"response_encoding" json:"response_encoding,computed_optional"`
+	ResponseFormat   types.String `tfsdk:"response_format" json:"response_format,computed_optional"`
+	SampleRate       types.Int64  `tfsdk:"sample_rate" json:"sample_rate,computed_optional"`
 }
 
 func (m AudioSpeechModel) MarshalJSON() (data []byte, err error) {
