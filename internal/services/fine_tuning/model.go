@@ -64,8 +64,8 @@ func (m FineTuningModel) MarshalJSONForUpdate(state FineTuningModel) (data []byt
 }
 
 type FineTuningLrSchedulerModel struct {
-	LrSchedulerType types.String                                                        `tfsdk:"lr_scheduler_type" json:"lr_scheduler_type,required"`
-	LrSchedulerArgs customfield.NestedObject[FineTuningLrSchedulerLrSchedulerArgsModel] `tfsdk:"lr_scheduler_args" json:"lr_scheduler_args,computed_optional"`
+	LrSchedulerType types.String                               `tfsdk:"lr_scheduler_type" json:"lr_scheduler_type,required"`
+	LrSchedulerArgs *FineTuningLrSchedulerLrSchedulerArgsModel `tfsdk:"lr_scheduler_args" json:"lr_scheduler_args,optional"`
 }
 
 type FineTuningLrSchedulerLrSchedulerArgsModel struct {

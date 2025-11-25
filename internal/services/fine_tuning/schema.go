@@ -161,9 +161,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						},
 					},
 					"lr_scheduler_args": schema.SingleNestedAttribute{
-						Computed:   true,
-						Optional:   true,
-						CustomType: customfield.NewNestedObjectType[FineTuningLrSchedulerLrSchedulerArgsModel](ctx),
+						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"min_lr_ratio": schema.Float64Attribute{
 								Description: "The ratio of the final learning rate to the peak learning rate",
