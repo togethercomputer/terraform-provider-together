@@ -5,7 +5,6 @@ package eval
 import (
 	"context"
 
-	"github.com/hashicorp/terraform-plugin-framework-jsontypes/jsontypes"
 	"github.com/hashicorp/terraform-plugin-framework-timetypes/timetypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -116,29 +115,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				},
 				PlanModifiers: []planmodifier.Object{objectplanmodifier.RequiresReplace()},
 			},
-			"error": schema.StringAttribute{
-				Description: "Error message when status is 'error' or 'user_error'",
-				Optional:    true,
-			},
-			"status": schema.StringAttribute{
-				Description: `Available values: "completed", "error", "user_error", "running", "queued", "pending".`,
-				Optional:    true,
-				Validators: []validator.String{
-					stringvalidator.OneOfCaseInsensitive(
-						"completed",
-						"error",
-						"user_error",
-						"running",
-						"queued",
-						"pending",
-					),
-				},
-			},
-			"results": schema.StringAttribute{
-				Description: "The results of the evaluation job. The concrete structure depends on the type of evaluation job",
-				Optional:    true,
-				CustomType:  jsontypes.NormalizedType{},
-			},
 			"created_at": schema.StringAttribute{
 				Description: "When the job was created",
 				Computed:    true,
@@ -148,6 +124,20 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Description: "ID of the job owner (admin only)",
 				Computed:    true,
 			},
+			"status": schema.StringAttribute{
+				Description: "Current status of the job\nAvailable values: \"pending\", \"queued\", \"running\", \"completed\", \"error\", \"user_error\".",
+				Computed:    true,
+				Validators: []validator.String{
+					stringvalidator.OneOfCaseInsensitive(
+						"pending",
+						"queued",
+						"running",
+						"completed",
+						"error",
+						"user_error",
+					),
+				},
+			},
 			"updated_at": schema.StringAttribute{
 				Description: "When the job was last updated",
 				Computed:    true,
@@ -156,6 +146,79 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"workflow_id": schema.StringAttribute{
 				Description: "The evaluation job ID",
 				Computed:    true,
+			},
+			"results": schema.SingleNestedAttribute{
+				Description: "Results of the evaluation (when completed)",
+				Computed:    true,
+				CustomType:  customfield.NewNestedObjectType[EvalResultsModel](ctx),
+				Attributes: map[string]schema.Attribute{
+					"generation_fail_count": schema.Float64Attribute{
+						Description: "Number of failed generations.",
+						Computed:    true,
+					},
+					"invalid_label_count": schema.Float64Attribute{
+						Description: "Number of invalid labels",
+						Computed:    true,
+					},
+					"judge_fail_count": schema.Float64Attribute{
+						Description: "Number of failed judge generations",
+						Computed:    true,
+					},
+					"label_counts": schema.StringAttribute{
+						Description: "JSON string representing label counts",
+						Computed:    true,
+					},
+					"pass_percentage": schema.Float64Attribute{
+						Description: "Pecentage of pass labels.",
+						Computed:    true,
+					},
+					"result_file_id": schema.StringAttribute{
+						Description: "Data File ID",
+						Computed:    true,
+					},
+					"aggregated_scores": schema.SingleNestedAttribute{
+						Computed:   true,
+						CustomType: customfield.NewNestedObjectType[EvalResultsAggregatedScoresModel](ctx),
+						Attributes: map[string]schema.Attribute{
+							"mean_score": schema.Float64Attribute{
+								Computed: true,
+							},
+							"pass_percentage": schema.Float64Attribute{
+								Computed: true,
+							},
+							"std_score": schema.Float64Attribute{
+								Computed: true,
+							},
+						},
+					},
+					"failed_samples": schema.Float64Attribute{
+						Description: "number of failed samples generated from model",
+						Computed:    true,
+					},
+					"invalid_score_count": schema.Float64Attribute{
+						Description: "number of invalid scores generated from model",
+						Computed:    true,
+					},
+					"a_wins": schema.Int64Attribute{
+						Description: "Number of times model A won",
+						Computed:    true,
+					},
+					"b_wins": schema.Int64Attribute{
+						Description: "Number of times model B won",
+						Computed:    true,
+					},
+					"num_samples": schema.Int64Attribute{
+						Description: "Total number of samples compared",
+						Computed:    true,
+					},
+					"ties": schema.Int64Attribute{
+						Description: "Number of ties",
+						Computed:    true,
+					},
+					"error": schema.StringAttribute{
+						Computed: true,
+					},
+				},
 			},
 			"status_updates": schema.ListNestedAttribute{
 				Description: "History of status updates (admin only)",
