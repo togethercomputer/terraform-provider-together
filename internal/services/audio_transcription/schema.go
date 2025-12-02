@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/float64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/float64planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -29,6 +30,16 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Description:   "Audio file to transcribe",
 				Required:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
+			},
+			"max_speakers": schema.Int64Attribute{
+				Description:   "Maximum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+				Optional:      true,
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
+			},
+			"min_speakers": schema.Int64Attribute{
+				Description:   "Minimum number of speakers expected in the audio. Used to improve diarization accuracy when the approximate number of speakers is known.",
+				Optional:      true,
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},
 			"prompt": schema.StringAttribute{
 				Description:   "Optional text to bias decoding.",

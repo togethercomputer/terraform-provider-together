@@ -14,6 +14,8 @@ import (
 
 type AudioTranscriptionModel struct {
 	File                   types.String                                                         `tfsdk:"file" json:"file,required"`
+	MaxSpeakers            types.Int64                                                          `tfsdk:"max_speakers" json:"max_speakers,optional"`
+	MinSpeakers            types.Int64                                                          `tfsdk:"min_speakers" json:"min_speakers,optional"`
 	Prompt                 types.String                                                         `tfsdk:"prompt" json:"prompt,optional"`
 	Diarize                types.Bool                                                           `tfsdk:"diarize" json:"diarize,computed_optional"`
 	Language               types.String                                                         `tfsdk:"language" json:"language,computed_optional"`
