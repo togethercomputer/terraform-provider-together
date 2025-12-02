@@ -12,6 +12,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
@@ -55,24 +56,9 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers: []planmodifier.Bool{boolplanmodifier.RequiresReplaceIfConfigured()},
 				Default:       booldefault.StaticBool(false),
 			},
-			"display_name": schema.StringAttribute{
-				Description: "A human-readable name for the endpoint",
-				Optional:    true,
-			},
-			"inactive_timeout": schema.Int64Attribute{
-				Description: "The number of minutes of inactivity after which the endpoint will be automatically stopped. Set to 0 to disable automatic timeout.",
-				Optional:    true,
-			},
-			"state": schema.StringAttribute{
-				Description: "The desired state of the endpoint\nAvailable values: \"STARTED\", \"STOPPED\".",
-				Optional:    true,
-				Validators: []validator.String{
-					stringvalidator.OneOfCaseInsensitive("STARTED", "STOPPED"),
-				},
-			},
 			"autoscaling": schema.SingleNestedAttribute{
-				Description: "New autoscaling configuration for the endpoint",
-				Optional:    true,
+				Description: "Configuration for automatic scaling of the endpoint",
+				Required:    true,
 				Attributes: map[string]schema.Attribute{
 					"max_replicas": schema.Int64Attribute{
 						Description: "The maximum number of replicas to scale up to under load",
@@ -83,6 +69,23 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						Required:    true,
 					},
 				},
+			},
+			"display_name": schema.StringAttribute{
+				Description: "A human-readable name for the endpoint",
+				Optional:    true,
+			},
+			"inactive_timeout": schema.Int64Attribute{
+				Description: "The number of minutes of inactivity after which the endpoint will be automatically stopped. Set to null, omit or set to 0 to disable automatic timeout.",
+				Optional:    true,
+			},
+			"state": schema.StringAttribute{
+				Description: "The desired state of the endpoint\nAvailable values: \"STARTED\", \"STOPPED\".",
+				Computed:    true,
+				Optional:    true,
+				Validators: []validator.String{
+					stringvalidator.OneOfCaseInsensitive("STARTED", "STOPPED"),
+				},
+				Default: stringdefault.StaticString("STARTED"),
 			},
 			"created_at": schema.StringAttribute{
 				Description: "Timestamp when the endpoint was created",
