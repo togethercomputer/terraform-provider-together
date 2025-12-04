@@ -21,10 +21,7 @@ resource "togetherai_chat_completion" "example_chat_completion" {
   reasoning_effort = "medium"
   repetition_penalty = 0
   response_format = {
-    schema = {
-      foo = "bar"
-    }
-    type = "json"
+    type = "text"
   }
   safety_model = "safety_model_name"
   seed = 42

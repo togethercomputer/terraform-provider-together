@@ -10,6 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/float64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
@@ -225,22 +226,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				ElementType:   types.StringType,
 				PlanModifiers: []planmodifier.List{listplanmodifier.RequiresReplace()},
 			},
-			"response_format": schema.SingleNestedAttribute{
-				Description: "An object specifying the format that the model must output.",
-				Optional:    true,
-				Attributes: map[string]schema.Attribute{
-					"schema": schema.MapAttribute{
-						Description: "The schema of the response format.",
-						Optional:    true,
-						ElementType: jsontypes.NormalizedType{},
-					},
-					"type": schema.StringAttribute{
-						Description: "The type of the response format.",
-						Optional:    true,
-					},
-				},
-				PlanModifiers: []planmodifier.Object{objectplanmodifier.RequiresReplace()},
-			},
 			"tools": schema.ListNestedAttribute{
 				Description: "A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for.",
 				Optional:    true,
@@ -278,6 +263,53 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				},
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplaceIfConfigured()},
 				Default:       stringdefault.StaticString("error"),
+			},
+			"response_format": schema.SingleNestedAttribute{
+				Description: "An object specifying the format that the model must output.\n\nSetting to `{ \"type\": \"json_schema\", \"json_schema\": {...} }` enables\nStructured Outputs which ensures the model will match your supplied JSON\nschema. Learn more in the [Structured Outputs\nguide](https://docs.together.ai/docs/json-mode).\n\nSetting to `{ \"type\": \"json_object\" }` enables the older JSON mode, which\nensures the message the model generates is valid JSON. Using `json_schema`\nis preferred for models that support it.",
+				Computed:    true,
+				Optional:    true,
+				CustomType:  customfield.NewNestedObjectType[ChatCompletionResponseFormatModel](ctx),
+				Attributes: map[string]schema.Attribute{
+					"type": schema.StringAttribute{
+						Description: "The type of response format being defined. Always `text`.\nAvailable values: \"text\", \"json_schema\", \"json_object\".",
+						Required:    true,
+						Validators: []validator.String{
+							stringvalidator.OneOfCaseInsensitive(
+								"text",
+								"json_schema",
+								"json_object",
+							),
+						},
+					},
+					"json_schema": schema.SingleNestedAttribute{
+						Description: "Structured Outputs configuration options, including a JSON Schema.",
+						Computed:    true,
+						Optional:    true,
+						CustomType:  customfield.NewNestedObjectType[ChatCompletionResponseFormatJsonSchemaModel](ctx),
+						Attributes: map[string]schema.Attribute{
+							"name": schema.StringAttribute{
+								Description: "The name of the response format. Must be a-z, A-Z, 0-9, or contain\nunderscores and dashes, with a maximum length of 64.",
+								Required:    true,
+							},
+							"description": schema.StringAttribute{
+								Description: "A description of what the response format is for, used by the model to\ndetermine how to respond in the format.",
+								Optional:    true,
+							},
+							"schema": schema.MapAttribute{
+								Description: "The schema for the response format, described as a JSON Schema object.\nLearn how to build JSON schemas [here](https://json-schema.org/).",
+								Optional:    true,
+								ElementType: jsontypes.NormalizedType{},
+							},
+							"strict": schema.BoolAttribute{
+								Description: "Whether to enable strict schema adherence when generating the output.\nIf set to true, the model will always follow the exact schema defined\nin the `schema` field. Only a subset of JSON Schema is supported when\n`strict` is `true`. To learn more, read the [Structured Outputs\nguide](https://docs.together.ai/docs/json-mode).",
+								Computed:    true,
+								Optional:    true,
+								Default:     booldefault.StaticBool(false),
+							},
+						},
+					},
+				},
+				PlanModifiers: []planmodifier.Object{objectplanmodifier.RequiresReplaceIfConfigured()},
 			},
 			"created": schema.Int64Attribute{
 				Computed: true,

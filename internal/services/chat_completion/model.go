@@ -10,36 +10,36 @@ import (
 )
 
 type ChatCompletionModel struct {
-	ID                            types.String                                              `tfsdk:"id" json:"id,computed"`
-	Model                         types.String                                              `tfsdk:"model" json:"model,required"`
-	Messages                      *[]*ChatCompletionMessagesModel                           `tfsdk:"messages" json:"messages,required"`
-	Echo                          types.Bool                                                `tfsdk:"echo" json:"echo,optional"`
-	FrequencyPenalty              types.Float64                                             `tfsdk:"frequency_penalty" json:"frequency_penalty,optional"`
-	FunctionCall                  types.String                                              `tfsdk:"function_call" json:"function_call,optional"`
-	Logprobs                      types.Int64                                               `tfsdk:"logprobs" json:"logprobs,optional"`
-	MaxTokens                     types.Int64                                               `tfsdk:"max_tokens" json:"max_tokens,optional"`
-	MinP                          types.Float64                                             `tfsdk:"min_p" json:"min_p,optional"`
-	N                             types.Int64                                               `tfsdk:"n" json:"n,optional"`
-	PresencePenalty               types.Float64                                             `tfsdk:"presence_penalty" json:"presence_penalty,optional"`
-	ReasoningEffort               types.String                                              `tfsdk:"reasoning_effort" json:"reasoning_effort,optional"`
-	RepetitionPenalty             types.Float64                                             `tfsdk:"repetition_penalty" json:"repetition_penalty,optional"`
-	SafetyModel                   types.String                                              `tfsdk:"safety_model" json:"safety_model,optional"`
-	Seed                          types.Int64                                               `tfsdk:"seed" json:"seed,optional"`
-	Stream                        types.Bool                                                `tfsdk:"stream" json:"stream,optional"`
-	Temperature                   types.Float64                                             `tfsdk:"temperature" json:"temperature,optional"`
-	ToolChoice                    types.String                                              `tfsdk:"tool_choice" json:"tool_choice,optional"`
-	TopK                          types.Int64                                               `tfsdk:"top_k" json:"top_k,optional"`
-	TopP                          types.Float64                                             `tfsdk:"top_p" json:"top_p,optional"`
-	LogitBias                     *map[string]types.Float64                                 `tfsdk:"logit_bias" json:"logit_bias,optional"`
-	Stop                          *[]types.String                                           `tfsdk:"stop" json:"stop,optional"`
-	ResponseFormat                *ChatCompletionResponseFormatModel                        `tfsdk:"response_format" json:"response_format,optional"`
-	Tools                         *[]*ChatCompletionToolsModel                              `tfsdk:"tools" json:"tools,optional"`
-	ContextLengthExceededBehavior types.String                                              `tfsdk:"context_length_exceeded_behavior" json:"context_length_exceeded_behavior,computed_optional"`
-	Created                       types.Int64                                               `tfsdk:"created" json:"created,computed"`
-	Object                        types.String                                              `tfsdk:"object" json:"object,computed"`
-	Choices                       customfield.NestedObjectList[ChatCompletionChoicesModel]  `tfsdk:"choices" json:"choices,computed"`
-	Usage                         customfield.NestedObject[ChatCompletionUsageModel]        `tfsdk:"usage" json:"usage,computed"`
-	Warnings                      customfield.NestedObjectList[ChatCompletionWarningsModel] `tfsdk:"warnings" json:"warnings,computed"`
+	ID                            types.String                                                `tfsdk:"id" json:"id,computed"`
+	Model                         types.String                                                `tfsdk:"model" json:"model,required"`
+	Messages                      *[]*ChatCompletionMessagesModel                             `tfsdk:"messages" json:"messages,required"`
+	Echo                          types.Bool                                                  `tfsdk:"echo" json:"echo,optional"`
+	FrequencyPenalty              types.Float64                                               `tfsdk:"frequency_penalty" json:"frequency_penalty,optional"`
+	FunctionCall                  types.String                                                `tfsdk:"function_call" json:"function_call,optional"`
+	Logprobs                      types.Int64                                                 `tfsdk:"logprobs" json:"logprobs,optional"`
+	MaxTokens                     types.Int64                                                 `tfsdk:"max_tokens" json:"max_tokens,optional"`
+	MinP                          types.Float64                                               `tfsdk:"min_p" json:"min_p,optional"`
+	N                             types.Int64                                                 `tfsdk:"n" json:"n,optional"`
+	PresencePenalty               types.Float64                                               `tfsdk:"presence_penalty" json:"presence_penalty,optional"`
+	ReasoningEffort               types.String                                                `tfsdk:"reasoning_effort" json:"reasoning_effort,optional"`
+	RepetitionPenalty             types.Float64                                               `tfsdk:"repetition_penalty" json:"repetition_penalty,optional"`
+	SafetyModel                   types.String                                                `tfsdk:"safety_model" json:"safety_model,optional"`
+	Seed                          types.Int64                                                 `tfsdk:"seed" json:"seed,optional"`
+	Stream                        types.Bool                                                  `tfsdk:"stream" json:"stream,optional"`
+	Temperature                   types.Float64                                               `tfsdk:"temperature" json:"temperature,optional"`
+	ToolChoice                    types.String                                                `tfsdk:"tool_choice" json:"tool_choice,optional"`
+	TopK                          types.Int64                                                 `tfsdk:"top_k" json:"top_k,optional"`
+	TopP                          types.Float64                                               `tfsdk:"top_p" json:"top_p,optional"`
+	LogitBias                     *map[string]types.Float64                                   `tfsdk:"logit_bias" json:"logit_bias,optional"`
+	Stop                          *[]types.String                                             `tfsdk:"stop" json:"stop,optional"`
+	Tools                         *[]*ChatCompletionToolsModel                                `tfsdk:"tools" json:"tools,optional"`
+	ContextLengthExceededBehavior types.String                                                `tfsdk:"context_length_exceeded_behavior" json:"context_length_exceeded_behavior,computed_optional"`
+	ResponseFormat                customfield.NestedObject[ChatCompletionResponseFormatModel] `tfsdk:"response_format" json:"response_format,computed_optional"`
+	Created                       types.Int64                                                 `tfsdk:"created" json:"created,computed"`
+	Object                        types.String                                                `tfsdk:"object" json:"object,computed"`
+	Choices                       customfield.NestedObjectList[ChatCompletionChoicesModel]    `tfsdk:"choices" json:"choices,computed"`
+	Usage                         customfield.NestedObject[ChatCompletionUsageModel]          `tfsdk:"usage" json:"usage,computed"`
+	Warnings                      customfield.NestedObjectList[ChatCompletionWarningsModel]   `tfsdk:"warnings" json:"warnings,computed"`
 }
 
 func (m ChatCompletionModel) MarshalJSON() (data []byte, err error) {
@@ -76,11 +76,6 @@ type ChatCompletionMessagesToolCallsFunctionModel struct {
 	Name      types.String `tfsdk:"name" json:"name,required"`
 }
 
-type ChatCompletionResponseFormatModel struct {
-	Schema *map[string]jsontypes.Normalized `tfsdk:"schema" json:"schema,optional"`
-	Type   types.String                     `tfsdk:"type" json:"type,optional"`
-}
-
 type ChatCompletionToolsModel struct {
 	Function *ChatCompletionToolsFunctionModel `tfsdk:"function" json:"function,optional"`
 	Type     types.String                      `tfsdk:"type" json:"type,optional"`
@@ -90,6 +85,18 @@ type ChatCompletionToolsFunctionModel struct {
 	Description types.String                     `tfsdk:"description" json:"description,optional"`
 	Name        types.String                     `tfsdk:"name" json:"name,optional"`
 	Parameters  *map[string]jsontypes.Normalized `tfsdk:"parameters" json:"parameters,optional"`
+}
+
+type ChatCompletionResponseFormatModel struct {
+	Type       types.String                                                          `tfsdk:"type" json:"type,required"`
+	JsonSchema customfield.NestedObject[ChatCompletionResponseFormatJsonSchemaModel] `tfsdk:"json_schema" json:"json_schema,computed_optional"`
+}
+
+type ChatCompletionResponseFormatJsonSchemaModel struct {
+	Name        types.String                     `tfsdk:"name" json:"name,required"`
+	Description types.String                     `tfsdk:"description" json:"description,optional"`
+	Schema      *map[string]jsontypes.Normalized `tfsdk:"schema" json:"schema,optional"`
+	Strict      types.Bool                       `tfsdk:"strict" json:"strict,computed_optional"`
 }
 
 type ChatCompletionChoicesModel struct {
