@@ -12,20 +12,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/audio_speech"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/audio_transcription"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/audio_translation"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/batch"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/chat_completion"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/completion"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/embedding"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/endpoint"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/eval"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/file"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/fine_tuning"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/job"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/rerank"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/video"
 	"github.com/togethercomputer/together-go"
 	"github.com/togethercomputer/together-go/option"
 )
@@ -109,32 +95,11 @@ func (p *TogetheraiProvider) ConfigValidators(_ context.Context) []provider.Conf
 }
 
 func (p *TogetheraiProvider) Resources(ctx context.Context) []func() resource.Resource {
-	return []func() resource.Resource{
-		chat_completion.NewResource,
-		completion.NewResource,
-		embedding.NewResource,
-		fine_tuning.NewResource,
-		video.NewResource,
-		audio_speech.NewResource,
-		audio_transcription.NewResource,
-		audio_translation.NewResource,
-		endpoint.NewResource,
-		rerank.NewResource,
-		batch.NewResource,
-		eval.NewResource,
-	}
+	return []func() resource.Resource{}
 }
 
 func (p *TogetheraiProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{
-		file.NewFileDataSource,
-		fine_tuning.NewFineTuningDataSource,
-		video.NewVideoDataSource,
-		job.NewJobDataSource,
-		endpoint.NewEndpointDataSource,
-		batch.NewBatchDataSource,
-		eval.NewEvalDataSource,
-	}
+	return []func() datasource.DataSource{}
 }
 
 func NewProvider(version string) func() provider.Provider {
