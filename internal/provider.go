@@ -12,6 +12,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/stainless-sdks/togetherai-terraform/internal/services/beta_cluster"
+	"github.com/stainless-sdks/togetherai-terraform/internal/services/beta_cluster_storage"
 	"github.com/togethercomputer/together-go"
 	"github.com/togethercomputer/together-go/option"
 )
@@ -95,11 +97,17 @@ func (p *TogetheraiProvider) ConfigValidators(_ context.Context) []provider.Conf
 }
 
 func (p *TogetheraiProvider) Resources(ctx context.Context) []func() resource.Resource {
-	return []func() resource.Resource{}
+	return []func() resource.Resource{
+		beta_cluster.NewResource,
+		beta_cluster_storage.NewResource,
+	}
 }
 
 func (p *TogetheraiProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{}
+	return []func() datasource.DataSource{
+		beta_cluster.NewBetaClusterDataSource,
+		beta_cluster_storage.NewBetaClusterStorageDataSource,
+	}
 }
 
 func NewProvider(version string) func() provider.Provider {
