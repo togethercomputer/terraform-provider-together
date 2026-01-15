@@ -14,6 +14,7 @@ type BetaClusterStorageModel struct {
 	Region     types.String `tfsdk:"region" json:"region,required,no_refresh"`
 	VolumeName types.String `tfsdk:"volume_name" json:"volume_name,required"`
 	SizeTib    types.Int64  `tfsdk:"size_tib" json:"size_tib,required"`
+	Status     types.String `tfsdk:"status" json:"status,computed"`
 }
 
 func (m BetaClusterStorageModel) MarshalJSON() (data []byte, err error) {

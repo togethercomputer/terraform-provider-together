@@ -14,9 +14,9 @@ type BetaClusterModel struct {
 	BillingType       types.String                                                    `tfsdk:"billing_type" json:"billing_type,required,no_refresh"`
 	ClusterName       types.String                                                    `tfsdk:"cluster_name" json:"cluster_name,required"`
 	DriverVersion     types.String                                                    `tfsdk:"driver_version" json:"driver_version,required"`
-	DurationDays      types.Int64                                                     `tfsdk:"duration_days" json:"duration_days,required,no_refresh"`
 	GPUType           types.String                                                    `tfsdk:"gpu_type" json:"gpu_type,required"`
 	Region            types.String                                                    `tfsdk:"region" json:"region,required"`
+	DurationDays      types.Int64                                                     `tfsdk:"duration_days" json:"duration_days,optional,no_refresh"`
 	VolumeID          types.String                                                    `tfsdk:"volume_id" json:"volume_id,optional,no_refresh"`
 	SharedVolume      *BetaClusterSharedVolumeModel                                   `tfsdk:"shared_volume" json:"shared_volume,optional,no_refresh"`
 	NumGPUs           types.Int64                                                     `tfsdk:"num_gpus" json:"num_gpus,required"`

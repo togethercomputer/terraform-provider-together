@@ -17,11 +17,11 @@ resource "togetherai_beta_cluster" "example_beta_cluster" {
   billing_type = "RESERVED"
   cluster_name = "cluster_name"
   driver_version = "CUDA_12_5_555"
-  duration_days = 0
   gpu_type = "H100_SXM"
   num_gpus = 0
   region = "us-central-8"
   cluster_type = "KUBERNETES"
+  duration_days = 0
   shared_volume = {
     region = "region"
     size_tib = 0
@@ -40,7 +40,6 @@ resource "togetherai_beta_cluster" "example_beta_cluster" {
 - `cluster_name` (String) Name of the GPU cluster.
 - `driver_version` (String) NVIDIA driver version to use in the cluster.
 Available values: "CUDA_12_5_555", "CUDA_12_6_560", "CUDA_12_6_565", "CUDA_12_8_570".
-- `duration_days` (Number) Duration in days to keep the cluster running.
 - `gpu_type` (String) Type of GPU to use in the cluster
 Available values: "H100_SXM", "H200_SXM", "RTX_6000_PCI", "L40_PCIE", "B200_SXM", "H100_SXM_INF".
 - `num_gpus` (Number) Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
@@ -50,6 +49,7 @@ Available values: "us-central-8", "us-central-4".
 ### Optional
 
 - `cluster_type` (String) Available values: "KUBERNETES", "SLURM".
+- `duration_days` (Number) Duration in days to keep the cluster running.
 - `shared_volume` (Attributes) (see [below for nested schema](#nestedatt--shared_volume))
 - `volume_id` (String)
 

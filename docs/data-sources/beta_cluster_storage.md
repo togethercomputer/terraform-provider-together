@@ -28,4 +28,5 @@ data "togetherai_beta_cluster_storage" "example_beta_cluster_storage" {
 ### Read-Only
 
 - `size_tib` (Number)
+- `status` (String) Available values: "available", "bound", "provisioning".
 - `volume_name` (String)

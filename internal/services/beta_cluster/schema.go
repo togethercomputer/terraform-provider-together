@@ -56,11 +56,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				},
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
-			"duration_days": schema.Int64Attribute{
-				Description:   "Duration in days to keep the cluster running.",
-				Required:      true,
-				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
-			},
 			"gpu_type": schema.StringAttribute{
 				Description: "Type of GPU to use in the cluster\nAvailable values: \"H100_SXM\", \"H200_SXM\", \"RTX_6000_PCI\", \"L40_PCIE\", \"B200_SXM\", \"H100_SXM_INF\".",
 				Required:    true,
@@ -83,6 +78,11 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 					stringvalidator.OneOfCaseInsensitive("us-central-8", "us-central-4"),
 				},
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
+			},
+			"duration_days": schema.Int64Attribute{
+				Description:   "Duration in days to keep the cluster running.",
+				Optional:      true,
+				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
 			},
 			"volume_id": schema.StringAttribute{
 				Optional:      true,
