@@ -9,5 +9,6 @@ import (
 type BetaClusterStorageDataSourceModel struct {
 	VolumeID   types.String `tfsdk:"volume_id" path:"volume_id,required"`
 	SizeTib    types.Int64  `tfsdk:"size_tib" json:"size_tib,computed"`
+	Status     types.String `tfsdk:"status" json:"status,computed"`
 	VolumeName types.String `tfsdk:"volume_name" json:"volume_name,computed"`
 }

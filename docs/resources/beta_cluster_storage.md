@@ -32,6 +32,7 @@ resource "togetherai_beta_cluster_storage" "example_beta_cluster_storage" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
+- `status` (String) Available values: "available", "bound", "provisioning".
 - `volume_id` (String)
 
 ## Import
