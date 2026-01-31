@@ -1,6 +1,6 @@
 # Together Terraform Provider
 
-The [Together Terraform provider](https://registry.terraform.io/providers/stainless-sdks/togetherai/latest/docs) provides convenient access to
+The [Together Terraform provider](https://registry.terraform.io/providers/stainless-sdks/together/latest/docs) provides convenient access to
 the [Together REST API](https://docs.together.ai/) from Terraform.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -18,20 +18,20 @@ Add the following to your `main.tf` file:
 # Declare the provider and version
 terraform {
   required_providers {
-    togetherai = {
-      source  = "stainless-sdks/togetherai"
+    together = {
+      source  = "stainless-sdks/together"
       version = "~> 0.0.1"
     }
   }
 }
 
 # Initialize the provider
-provider "togetherai" {
+provider "together" {
   api_key = "My API Key" # or set TOGETHER_API_KEY env variable
 }
 
 # Configure a resource
-resource "togetherai_beta_cluster" "example_beta_cluster" {
+resource "together_beta_cluster" "example_beta_cluster" {
   billing_type = "RESERVED"
   cluster_name = "cluster_name"
   driver_version = "CUDA_12_5_555"
@@ -52,7 +52,7 @@ resource "togetherai_beta_cluster" "example_beta_cluster" {
 Initialize your project by running `terraform init` in the directory.
 
 Additional examples can be found in the [./examples](./examples) folder within this repository, and you can
-refer to the full documentation on [the Terraform Registry](https://registry.terraform.io/providers/stainless-sdks/togetherai/latest/docs).
+refer to the full documentation on [the Terraform Registry](https://registry.terraform.io/providers/stainless-sdks/together/latest/docs).
 
 ### Provider Options
 

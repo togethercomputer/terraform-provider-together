@@ -1,3 +1,3 @@
-provider "togetherai" {
+provider "together" {
   api_key = "My API Key"
 }

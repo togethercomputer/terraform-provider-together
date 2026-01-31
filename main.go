@@ -22,7 +22,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "registry.terraform.io/stainless-sdks/togetherai",
+		Address: "registry.terraform.io/stainless-sdks/together",
 		Debug:   debug,
 	}
 
