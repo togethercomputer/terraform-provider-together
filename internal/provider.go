@@ -18,24 +18,24 @@ import (
 	"github.com/togethercomputer/together-go/option"
 )
 
-var _ provider.ProviderWithConfigValidators = (*TogetheraiProvider)(nil)
+var _ provider.ProviderWithConfigValidators = (*TogetherProvider)(nil)
 
-// TogetheraiProvider defines the provider implementation.
-type TogetheraiProvider struct {
+// TogetherProvider defines the provider implementation.
+type TogetherProvider struct {
 	// version is set to the provider version on release, "dev" when the
 	// provider is built and ran locally, and "test" when running acceptance
 	// testing.
 	version string
 }
 
-// TogetheraiProviderModel describes the provider data model.
-type TogetheraiProviderModel struct {
+// TogetherProviderModel describes the provider data model.
+type TogetherProviderModel struct {
 	BaseURL types.String `tfsdk:"base_url" json:"base_url,optional"`
 	APIKey  types.String `tfsdk:"api_key" json:"api_key,optional"`
 }
 
-func (p *TogetheraiProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "togetherai"
+func (p *TogetherProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
+	resp.TypeName = "together"
 	resp.Version = p.version
 }
 
@@ -53,13 +53,13 @@ func ProviderSchema(ctx context.Context) schema.Schema {
 	}
 }
 
-func (p *TogetheraiProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (p *TogetherProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = ProviderSchema(ctx)
 }
 
-func (p *TogetheraiProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+func (p *TogetherProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
 
-	var data TogetheraiProviderModel
+	var data TogetherProviderModel
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
@@ -92,18 +92,18 @@ func (p *TogetheraiProvider) Configure(ctx context.Context, req provider.Configu
 	resp.ResourceData = &client
 }
 
-func (p *TogetheraiProvider) ConfigValidators(_ context.Context) []provider.ConfigValidator {
+func (p *TogetherProvider) ConfigValidators(_ context.Context) []provider.ConfigValidator {
 	return []provider.ConfigValidator{}
 }
 
-func (p *TogetheraiProvider) Resources(ctx context.Context) []func() resource.Resource {
+func (p *TogetherProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		beta_cluster.NewResource,
 		beta_cluster_storage.NewResource,
 	}
 }
 
-func (p *TogetheraiProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
+func (p *TogetherProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		beta_cluster.NewBetaClusterDataSource,
 		beta_cluster_storage.NewBetaClusterStorageDataSource,
@@ -112,7 +112,7 @@ func (p *TogetheraiProvider) DataSources(ctx context.Context) []func() datasourc
 
 func NewProvider(version string) func() provider.Provider {
 	return func() provider.Provider {
-		return &TogetheraiProvider{
+		return &TogetherProvider{
 			version: version,
 		}
 	}

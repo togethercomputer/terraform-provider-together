@@ -1,4 +1,4 @@
-resource "togetherai_beta_cluster" "example_beta_cluster" {
+resource "together_beta_cluster" "example_beta_cluster" {
   billing_type = "RESERVED"
   cluster_name = "cluster_name"
   driver_version = "CUDA_12_5_555"
