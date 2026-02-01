@@ -18,7 +18,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/tidwall/gjson"
 
-	"github.com/stainless-sdks/togetherai-terraform/internal/customfield"
+	"github.com/togethercomputer/terraform-provider-togetherai/internal/customfield"
 )
 
 // decoders is a synchronized map with roughly the following type:

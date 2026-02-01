@@ -1,6 +1,6 @@
 # Together Terraform Provider
 
-The [Together Terraform provider](https://registry.terraform.io/providers/stainless-sdks/together/latest/docs) provides convenient access to
+The [Together Terraform provider](https://registry.terraform.io/providers/togethercomputer/together/latest/docs) provides convenient access to
 the [Together REST API](https://docs.together.ai/) from Terraform.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -14,12 +14,14 @@ on Hashicorp's website.
 
 Add the following to your `main.tf` file:
 
+<!-- x-release-please-start-version -->
+
 ```hcl
 # Declare the provider and version
 terraform {
   required_providers {
     together = {
-      source  = "stainless-sdks/together"
+      source  = "togethercomputer/together"
       version = "~> 0.0.1"
     }
   }
@@ -49,10 +51,12 @@ resource "together_beta_cluster" "example_beta_cluster" {
 }
 ```
 
+<!-- x-release-please-end -->
+
 Initialize your project by running `terraform init` in the directory.
 
 Additional examples can be found in the [./examples](./examples) folder within this repository, and you can
-refer to the full documentation on [the Terraform Registry](https://registry.terraform.io/providers/stainless-sdks/together/latest/docs).
+refer to the full documentation on [the Terraform Registry](https://registry.terraform.io/providers/togethercomputer/together/latest/docs).
 
 ### Provider Options
 
@@ -72,7 +76,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/togetherai-terraform/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/togethercomputer/terraform-provider-togetherai/issues) with questions, bugs, or suggestions.
 
 ## Contributing
 

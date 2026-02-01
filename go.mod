@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/togetherai-terraform
+module github.com/togethercomputer/terraform-provider-togetherai
 
 go 1.24.0
 

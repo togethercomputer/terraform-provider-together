@@ -2,7 +2,7 @@ package customvalidator_test
 
 import (
 	"context"
-	"github.com/stainless-sdks/togetherai-terraform/internal/customvalidator"
+	"github.com/togethercomputer/terraform-provider-togetherai/internal/customvalidator"
 	"math/big"
 	"testing"
 

@@ -4,8 +4,8 @@ package beta_cluster
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/stainless-sdks/togetherai-terraform/internal/apijson"
-	"github.com/stainless-sdks/togetherai-terraform/internal/customfield"
+	"github.com/togethercomputer/terraform-provider-togetherai/internal/apijson"
+	"github.com/togethercomputer/terraform-provider-togetherai/internal/customfield"
 )
 
 type BetaClusterModel struct {
