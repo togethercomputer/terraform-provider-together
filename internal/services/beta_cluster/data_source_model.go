@@ -4,7 +4,7 @@ package beta_cluster
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/stainless-sdks/togetherai-terraform/internal/customfield"
+	"github.com/togethercomputer/terraform-provider-togetherai/internal/customfield"
 )
 
 type BetaClusterDataSourceModel struct {
