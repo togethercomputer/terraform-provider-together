@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/importpath"
+	"github.com/togethercomputer/terraform-provider-together/internal/importpath"
 )
 
 func TestParseID(t *testing.T) {
