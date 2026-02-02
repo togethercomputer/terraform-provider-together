@@ -5,7 +5,7 @@ package beta_cluster_storage
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/tidwall/sjson"
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/apijson"
+	"github.com/togethercomputer/terraform-provider-together/internal/apijson"
 )
 
 type BetaClusterStorageModel struct {

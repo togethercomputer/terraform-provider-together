@@ -1,4 +1,4 @@
-module github.com/togethercomputer/terraform-provider-togetherai
+module github.com/togethercomputer/terraform-provider-together
 
 go 1.24.0
 

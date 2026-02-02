@@ -10,9 +10,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/apijson"
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/importpath"
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/logging"
+	"github.com/togethercomputer/terraform-provider-together/internal/apijson"
+	"github.com/togethercomputer/terraform-provider-together/internal/importpath"
+	"github.com/togethercomputer/terraform-provider-together/internal/logging"
 	"github.com/togethercomputer/together-go"
 	"github.com/togethercomputer/together-go/option"
 	"github.com/togethercomputer/together-go/packages/param"

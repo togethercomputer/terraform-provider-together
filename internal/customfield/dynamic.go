@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
 
-	t "github.com/togethercomputer/terraform-provider-togetherai/internal/types"
+	t "github.com/togethercomputer/terraform-provider-together/internal/types"
 )
 
 var (

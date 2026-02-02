@@ -21,8 +21,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/apijson"
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/customfield"
+	"github.com/togethercomputer/terraform-provider-together/internal/apijson"
+	"github.com/togethercomputer/terraform-provider-together/internal/customfield"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc

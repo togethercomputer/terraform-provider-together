@@ -6,8 +6,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/services/beta_cluster"
-	"github.com/togethercomputer/terraform-provider-togetherai/internal/test_helpers"
+	"github.com/togethercomputer/terraform-provider-together/internal/services/beta_cluster"
+	"github.com/togethercomputer/terraform-provider-together/internal/test_helpers"
 )
 
 func TestBetaClusterDataSourceModelSchemaParity(t *testing.T) {
