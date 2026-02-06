@@ -14,12 +14,19 @@ description: |-
 
 ```terraform
 resource "together_beta_cluster" "example_beta_cluster" {
+  billing_type = "RESERVED"
   cluster_name = "cluster_name"
   driver_version = "CUDA_12_5_555"
   gpu_type = "H100_SXM"
   num_gpus = 0
   region = "us-central-8"
   cluster_type = "KUBERNETES"
+  duration_days = 0
+  shared_volume = {
+    region = "region"
+    size_tib = 0
+    volume_name = "volume_name"
+  }
   volume_id = "volume_id"
 }
 ```
@@ -29,6 +36,7 @@ resource "together_beta_cluster" "example_beta_cluster" {
 
 ### Required
 
+- `billing_type` (String) Available values: "RESERVED", "ON_DEMAND".
 - `cluster_name` (String) Name of the GPU cluster.
 - `driver_version` (String) NVIDIA driver version to use in the cluster.
 Available values: "CUDA_12_5_555", "CUDA_12_6_560", "CUDA_12_6_565", "CUDA_12_8_570".
@@ -41,6 +49,8 @@ Available values: "us-central-8", "us-central-4".
 ### Optional
 
 - `cluster_type` (String) Available values: "KUBERNETES", "SLURM".
+- `duration_days` (Number) Duration in days to keep the cluster running.
+- `shared_volume` (Attributes) (see [below for nested schema](#nestedatt--shared_volume))
 - `volume_id` (String)
 
 ### Read-Only
@@ -54,6 +64,16 @@ Available values: "us-central-8", "us-central-4".
 - `status` (String) Current status of the GPU cluster.
 Available values: "WaitingForControlPlaneNodes", "WaitingForDataPlaneNodes", "WaitingForSubnet", "WaitingForSharedVolume", "InstallingDrivers", "RunningAcceptanceTests", "Paused", "OnDemandComputePaused", "Ready", "Degraded", "Deleting".
 - `volumes` (Attributes List) (see [below for nested schema](#nestedatt--volumes))
+
+<a id="nestedatt--shared_volume"></a>
+### Nested Schema for `shared_volume`
+
+Required:
+
+- `region` (String) Region name. Usable regions can be found from `client.clusters.list_regions()`
+- `size_tib` (Number) Volume size in whole tebibytes (TiB).
+- `volume_name` (String)
+
 
 <a id="nestedatt--control_plane_nodes"></a>
 ### Nested Schema for `control_plane_nodes`
