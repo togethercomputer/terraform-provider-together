@@ -8,8 +8,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -29,14 +27,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 			"cluster_id": schema.StringAttribute{
 				Computed:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
-			},
-			"billing_type": schema.StringAttribute{
-				Description: `Available values: "RESERVED", "ON_DEMAND".`,
-				Required:    true,
-				Validators: []validator.String{
-					stringvalidator.OneOfCaseInsensitive("RESERVED", "ON_DEMAND"),
-				},
-				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"cluster_name": schema.StringAttribute{
 				Description:   "Name of the GPU cluster.",
@@ -79,31 +69,9 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				},
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
-			"duration_days": schema.Int64Attribute{
-				Description:   "Duration in days to keep the cluster running.",
-				Optional:      true,
-				PlanModifiers: []planmodifier.Int64{int64planmodifier.RequiresReplace()},
-			},
 			"volume_id": schema.StringAttribute{
 				Optional:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
-			},
-			"shared_volume": schema.SingleNestedAttribute{
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"region": schema.StringAttribute{
-						Description: "Region name. Usable regions can be found from `client.clusters.list_regions()`",
-						Required:    true,
-					},
-					"size_tib": schema.Int64Attribute{
-						Description: "Volume size in whole tebibytes (TiB).",
-						Required:    true,
-					},
-					"volume_name": schema.StringAttribute{
-						Required: true,
-					},
-				},
-				PlanModifiers: []planmodifier.Object{objectplanmodifier.RequiresReplace()},
 			},
 			"num_gpus": schema.Int64Attribute{
 				Description: "Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24",
