@@ -11,14 +11,11 @@ import (
 type BetaClusterModel struct {
 	ID                types.String                                                    `tfsdk:"id" json:"-,computed"`
 	ClusterID         types.String                                                    `tfsdk:"cluster_id" json:"cluster_id,computed"`
-	BillingType       types.String                                                    `tfsdk:"billing_type" json:"billing_type,required,no_refresh"`
 	ClusterName       types.String                                                    `tfsdk:"cluster_name" json:"cluster_name,required"`
 	DriverVersion     types.String                                                    `tfsdk:"driver_version" json:"driver_version,required"`
 	GPUType           types.String                                                    `tfsdk:"gpu_type" json:"gpu_type,required"`
 	Region            types.String                                                    `tfsdk:"region" json:"region,required"`
-	DurationDays      types.Int64                                                     `tfsdk:"duration_days" json:"duration_days,optional,no_refresh"`
 	VolumeID          types.String                                                    `tfsdk:"volume_id" json:"volume_id,optional,no_refresh"`
-	SharedVolume      *BetaClusterSharedVolumeModel                                   `tfsdk:"shared_volume" json:"shared_volume,optional,no_refresh"`
 	NumGPUs           types.Int64                                                     `tfsdk:"num_gpus" json:"num_gpus,required"`
 	ClusterType       types.String                                                    `tfsdk:"cluster_type" json:"cluster_type,optional"`
 	DurationHours     types.Int64                                                     `tfsdk:"duration_hours" json:"duration_hours,computed"`
@@ -47,12 +44,6 @@ func (m InternalBetaClusterModel) MarshalJSON() (data []byte, err error) {
 
 func (m BetaClusterModel) MarshalJSONForUpdate(state BetaClusterModel) (data []byte, err error) {
 	return apijson.MarshalForUpdate(m, state)
-}
-
-type BetaClusterSharedVolumeModel struct {
-	Region     types.String `tfsdk:"region" json:"region,required"`
-	SizeTib    types.Int64  `tfsdk:"size_tib" json:"size_tib,required"`
-	VolumeName types.String `tfsdk:"volume_name" json:"volume_name,required"`
 }
 
 type BetaClusterControlPlaneNodesModel struct {
