@@ -17,13 +17,15 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"volume_id": schema.StringAttribute{
-				Required: true,
+				Description: "The ID of the volume to retrieve",
+				Required:    true,
 			},
 			"size_tib": schema.Int64Attribute{
-				Computed: true,
+				Description: "Size of the volume in whole tebibytes (TiB).",
+				Computed:    true,
 			},
 			"status": schema.StringAttribute{
-				Description: `Available values: "available", "bound", "provisioning".`,
+				Description: "Deployment status of the volume.\nAvailable values: \"available\", \"bound\", \"provisioning\".",
 				Computed:    true,
 				Validators: []validator.String{
 					stringvalidator.OneOfCaseInsensitive(
@@ -34,7 +36,8 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				},
 			},
 			"volume_name": schema.StringAttribute{
-				Computed: true,
+				Description: "Provided name of the volume.",
+				Computed:    true,
 			},
 		},
 	}

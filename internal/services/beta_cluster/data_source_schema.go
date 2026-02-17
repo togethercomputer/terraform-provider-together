@@ -19,13 +19,14 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"cluster_id": schema.StringAttribute{
-				Required: true,
+				Description: "The ID of the cluster to retrieve",
+				Required:    true,
 			},
 			"cluster_name": schema.StringAttribute{
 				Computed: true,
 			},
 			"cluster_type": schema.StringAttribute{
-				Description: `Available values: "KUBERNETES", "SLURM".`,
+				Description: "Type of cluster.\nAvailable values: \"KUBERNETES\", \"SLURM\".",
 				Computed:    true,
 				Validators: []validator.String{
 					stringvalidator.OneOfCaseInsensitive("KUBERNETES", "SLURM"),

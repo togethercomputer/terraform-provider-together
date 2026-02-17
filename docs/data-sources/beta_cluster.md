@@ -23,12 +23,13 @@ data "together_beta_cluster" "example_beta_cluster" {
 
 ### Required
 
-- `cluster_id` (String)
+- `cluster_id` (String) The ID of the cluster to retrieve
 
 ### Read-Only
 
 - `cluster_name` (String)
-- `cluster_type` (String) Available values: "KUBERNETES", "SLURM".
+- `cluster_type` (String) Type of cluster.
+Available values: "KUBERNETES", "SLURM".
 - `control_plane_nodes` (Attributes List) (see [below for nested schema](#nestedatt--control_plane_nodes))
 - `driver_version` (String) Available values: "CUDA_12_5_555", "CUDA_12_6_560", "CUDA_12_6_565", "CUDA_12_8_570".
 - `duration_hours` (Number)

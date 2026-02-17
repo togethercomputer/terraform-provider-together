@@ -62,14 +62,12 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"region": schema.StringAttribute{
-				Description: "Region to create the GPU cluster in. Valid values are us-central-8 and us-central-4.\nAvailable values: \"us-central-8\", \"us-central-4\".",
-				Required:    true,
-				Validators: []validator.String{
-					stringvalidator.OneOfCaseInsensitive("us-central-8", "us-central-4"),
-				},
+				Description:   "Region to create the GPU cluster in. Usable regions can be found from `client.clusters.list_regions()`",
+				Required:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"volume_id": schema.StringAttribute{
+				Description:   "ID of an existing volume to use with the cluster creation.",
 				Optional:      true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
@@ -78,7 +76,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				Required:    true,
 			},
 			"cluster_type": schema.StringAttribute{
-				Description: `Available values: "KUBERNETES", "SLURM".`,
+				Description: "Type of cluster to create.\nAvailable values: \"KUBERNETES\", \"SLURM\".",
 				Optional:    true,
 				Validators: []validator.String{
 					stringvalidator.OneOfCaseInsensitive("KUBERNETES", "SLURM"),
