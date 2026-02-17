@@ -27,13 +27,14 @@ resource "together_beta_cluster_storage" "example_beta_cluster_storage" {
 
 - `region` (String) Region name. Usable regions can be found from `client.clusters.list_regions()`
 - `size_tib` (Number) Volume size in whole tebibytes (TiB).
-- `volume_name` (String)
+- `volume_name` (String) Customizable name of the volume to create.
 
 ### Read-Only
 
-- `id` (String) The ID of this resource.
-- `status` (String) Available values: "available", "bound", "provisioning".
-- `volume_id` (String)
+- `id` (String) ID of the volume.
+- `status` (String) Deployment status of the volume.
+Available values: "available", "bound", "provisioning".
+- `volume_id` (String) ID of the volume.
 
 ## Import
 

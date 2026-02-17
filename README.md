@@ -38,7 +38,7 @@ resource "together_beta_cluster" "example_beta_cluster" {
   driver_version = "CUDA_12_5_555"
   gpu_type = "H100_SXM"
   num_gpus = 0
-  region = "us-central-8"
+  region = "region"
   cluster_type = "KUBERNETES"
   volume_id = "volume_id"
 }

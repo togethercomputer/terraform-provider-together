@@ -18,7 +18,7 @@ resource "together_beta_cluster" "example_beta_cluster" {
   driver_version = "CUDA_12_5_555"
   gpu_type = "H100_SXM"
   num_gpus = 0
-  region = "us-central-8"
+  region = "region"
   cluster_type = "KUBERNETES"
   volume_id = "volume_id"
 }
@@ -35,13 +35,13 @@ Available values: "CUDA_12_5_555", "CUDA_12_6_560", "CUDA_12_6_565", "CUDA_12_8_
 - `gpu_type` (String) Type of GPU to use in the cluster
 Available values: "H100_SXM", "H200_SXM", "RTX_6000_PCI", "L40_PCIE", "B200_SXM", "H100_SXM_INF".
 - `num_gpus` (Number) Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
-- `region` (String) Region to create the GPU cluster in. Valid values are us-central-8 and us-central-4.
-Available values: "us-central-8", "us-central-4".
+- `region` (String) Region to create the GPU cluster in. Usable regions can be found from `client.clusters.list_regions()`
 
 ### Optional
 
-- `cluster_type` (String) Available values: "KUBERNETES", "SLURM".
-- `volume_id` (String)
+- `cluster_type` (String) Type of cluster to create.
+Available values: "KUBERNETES", "SLURM".
+- `volume_id` (String) ID of an existing volume to use with the cluster creation.
 
 ### Read-Only
 
