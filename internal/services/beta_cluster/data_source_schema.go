@@ -5,6 +5,7 @@ package beta_cluster
 import (
 	"context"
 
+	"github.com/hashicorp/terraform-plugin-framework-timetypes/timetypes"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -22,6 +23,9 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				Description: "The ID of the cluster to retrieve",
 				Required:    true,
 			},
+			"capacity_pool_id": schema.StringAttribute{
+				Computed: true,
+			},
 			"cluster_name": schema.StringAttribute{
 				Computed: true,
 			},
@@ -32,17 +36,12 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 					stringvalidator.OneOfCaseInsensitive("KUBERNETES", "SLURM"),
 				},
 			},
-			"driver_version": schema.StringAttribute{
-				Description: `Available values: "CUDA_12_5_555", "CUDA_12_6_560", "CUDA_12_6_565", "CUDA_12_8_570".`,
-				Computed:    true,
-				Validators: []validator.String{
-					stringvalidator.OneOfCaseInsensitive(
-						"CUDA_12_5_555",
-						"CUDA_12_6_560",
-						"CUDA_12_6_565",
-						"CUDA_12_8_570",
-					),
-				},
+			"created_at": schema.StringAttribute{
+				Computed:   true,
+				CustomType: timetypes.RFC3339Type{},
+			},
+			"cuda_version": schema.StringAttribute{
+				Computed: true,
 			},
 			"duration_hours": schema.Int64Attribute{
 				Computed: true,
@@ -61,13 +60,30 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 					),
 				},
 			},
+			"install_traefik": schema.BoolAttribute{
+				Computed: true,
+			},
 			"kube_config": schema.StringAttribute{
 				Computed: true,
 			},
 			"num_gpus": schema.Int64Attribute{
 				Computed: true,
 			},
+			"nvidia_driver_version": schema.StringAttribute{
+				Computed: true,
+			},
 			"region": schema.StringAttribute{
+				Computed: true,
+			},
+			"reservation_end_time": schema.StringAttribute{
+				Computed:   true,
+				CustomType: timetypes.RFC3339Type{},
+			},
+			"reservation_start_time": schema.StringAttribute{
+				Computed:   true,
+				CustomType: timetypes.RFC3339Type{},
+			},
+			"slurm_shm_size_gib": schema.Int64Attribute{
 				Computed: true,
 			},
 			"status": schema.StringAttribute{
@@ -147,6 +163,9 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 							Computed: true,
 						},
 						"status": schema.StringAttribute{
+							Computed: true,
+						},
+						"instance_id": schema.StringAttribute{
 							Computed: true,
 						},
 					},
