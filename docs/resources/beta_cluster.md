@@ -15,11 +15,21 @@ description: |-
 ```terraform
 resource "together_beta_cluster" "example_beta_cluster" {
   cluster_name = "cluster_name"
-  driver_version = "CUDA_12_5_555"
+  cuda_version = "cuda_version"
   gpu_type = "H100_SXM"
   num_gpus = 0
+  nvidia_driver_version = "nvidia_driver_version"
   region = "region"
+  auto_scale_max_gpus = 0
+  auto_scaled = true
+  capacity_pool_id = "capacity_pool_id"
   cluster_type = "KUBERNETES"
+  gpu_node_failover_enabled = true
+  install_traefik = true
+  reservation_end_time = "2019-12-27T18:11:19.117Z"
+  reservation_start_time = "2019-12-27T18:11:19.117Z"
+  slurm_image = "slurm_image"
+  slurm_shm_size_gib = 0
   volume_id = "volume_id"
 }
 ```
@@ -30,23 +40,33 @@ resource "together_beta_cluster" "example_beta_cluster" {
 ### Required
 
 - `cluster_name` (String) Name of the GPU cluster.
-- `driver_version` (String) NVIDIA driver version to use in the cluster.
-Available values: "CUDA_12_5_555", "CUDA_12_6_560", "CUDA_12_6_565", "CUDA_12_8_570".
+- `cuda_version` (String) CUDA version for this cluster. For example, 12.5
 - `gpu_type` (String) Type of GPU to use in the cluster
 Available values: "H100_SXM", "H200_SXM", "RTX_6000_PCI", "L40_PCIE", "B200_SXM", "H100_SXM_INF".
 - `num_gpus` (Number) Number of GPUs to allocate in the cluster. This must be multiple of 8. For example, 8, 16 or 24
+- `nvidia_driver_version` (String) Nvidia driver version for this cluster. For example, 550. Only some combination of cuda_version and nvidia_driver_version are supported.
 - `region` (String) Region to create the GPU cluster in. Usable regions can be found from `client.clusters.list_regions()`
 
 ### Optional
 
+- `auto_scale_max_gpus` (Number) Maximum number of GPUs to which the cluster can be auto-scaled up. This field is required if auto_scaled is true.
+- `auto_scaled` (Boolean) Whether GPU cluster should be auto-scaled based on the workload. By default, it is not auto-scaled.
+- `capacity_pool_id` (String) ID of the capacity pool to use for the cluster. This field is optional and only applicable if the cluster is created from a capacity pool.
 - `cluster_type` (String) Type of cluster to create.
 Available values: "KUBERNETES", "SLURM".
+- `gpu_node_failover_enabled` (Boolean) Whether automated GPU node failover should be enabled for this cluster. By default, it is disabled.
+- `install_traefik` (Boolean) Whether to install Traefik ingress controller in the cluster. This field is only applicable for Kubernetes clusters and is false by default.
+- `reservation_end_time` (String) Reservation end time of the cluster. This field is required for SCHEDULED billing to specify the reservation end time for the cluster.
+- `reservation_start_time` (String) Reservation start time of the cluster. This field is required for SCHEDULED billing to specify the reservation start time for the cluster. If not provided, the cluster will be provisioned immediately.
+- `slurm_image` (String) Custom Slurm image for Slurm clusters.
+- `slurm_shm_size_gib` (Number) Shared memory size in GiB for Slurm cluster. This field is required if cluster_type is SLURM.
 - `volume_id` (String) ID of an existing volume to use with the cluster creation.
 
 ### Read-Only
 
 - `cluster_id` (String)
 - `control_plane_nodes` (Attributes List) (see [below for nested schema](#nestedatt--control_plane_nodes))
+- `created_at` (String)
 - `duration_hours` (Number)
 - `gpu_worker_nodes` (Attributes List) (see [below for nested schema](#nestedatt--gpu_worker_nodes))
 - `id` (String) The ID of this resource.
@@ -75,6 +95,7 @@ Read-Only:
 Read-Only:
 
 - `host_name` (String)
+- `instance_id` (String)
 - `memory_gib` (Number)
 - `networks` (List of String)
 - `node_id` (String)
