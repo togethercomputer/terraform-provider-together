@@ -78,7 +78,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
 			},
 			"reservation_start_time": schema.StringAttribute{
-				Description:   "Reservation start time of the cluster. This field is required for SCHEDULED billing to specify the reservation start time for the cluster. If not provided, the cluster will be provisioned immediately.",
+				Description:   "Reservation start time of the cluster. This field is required for SCHEDULED billing to specify the reservation start time for the cluster. If not provided, the cluster provisions immediately.",
 				Optional:      true,
 				CustomType:    timetypes.RFC3339Type{},
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
