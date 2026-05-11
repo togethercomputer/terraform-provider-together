@@ -57,7 +57,7 @@ Available values: "KUBERNETES", "SLURM".
 - `gpu_node_failover_enabled` (Boolean) Whether automated GPU node failover should be enabled for this cluster. By default, it is disabled.
 - `install_traefik` (Boolean) Whether to install Traefik ingress controller in the cluster. This field is only applicable for Kubernetes clusters and is false by default.
 - `reservation_end_time` (String) Reservation end time of the cluster. This field is required for SCHEDULED billing to specify the reservation end time for the cluster.
-- `reservation_start_time` (String) Reservation start time of the cluster. This field is required for SCHEDULED billing to specify the reservation start time for the cluster. If not provided, the cluster will be provisioned immediately.
+- `reservation_start_time` (String) Reservation start time of the cluster. This field is required for SCHEDULED billing to specify the reservation start time for the cluster. If not provided, the cluster provisions immediately.
 - `slurm_image` (String) Custom Slurm image for Slurm clusters.
 - `slurm_shm_size_gib` (Number) Shared memory size in GiB for Slurm cluster. This field is required if cluster_type is SLURM.
 - `volume_id` (String) ID of an existing volume to use with the cluster creation.
