@@ -9,12 +9,13 @@ import (
 )
 
 type BetaClusterStorageModel struct {
-	ID         types.String `tfsdk:"id" json:"-,computed"`
-	VolumeID   types.String `tfsdk:"volume_id" json:"volume_id,computed"`
-	Region     types.String `tfsdk:"region" json:"region,required,no_refresh"`
-	VolumeName types.String `tfsdk:"volume_name" json:"volume_name,required"`
-	SizeTib    types.Int64  `tfsdk:"size_tib" json:"size_tib,required"`
-	Status     types.String `tfsdk:"status" json:"status,computed"`
+	ID                     types.String `tfsdk:"id" json:"-,computed"`
+	VolumeID               types.String `tfsdk:"volume_id" json:"volume_id,computed"`
+	Region                 types.String `tfsdk:"region" json:"region,required,no_refresh"`
+	VolumeName             types.String `tfsdk:"volume_name" json:"volume_name,required"`
+	IsLifecycleIndependent types.Bool   `tfsdk:"is_lifecycle_independent" json:"is_lifecycle_independent,optional,no_refresh"`
+	SizeTib                types.Int64  `tfsdk:"size_tib" json:"size_tib,required"`
+	Status                 types.String `tfsdk:"status" json:"status,computed"`
 }
 
 func (m BetaClusterStorageModel) MarshalJSON() (data []byte, err error) {
