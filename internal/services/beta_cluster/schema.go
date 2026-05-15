@@ -527,7 +527,7 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 							Computed: true,
 						},
 						"latest_remediation": schema.SingleNestedAttribute{
-							Description: "Remediation represents a node remediation request for an instance.\n An instance can have multiple remediations over time (e.g., failed attempts followed by retries).",
+							Description: "Remediation represents a node remediation request for an instance.\nAn instance can have multiple remediations over time (e.g., failed attempts followed by retries).",
 							Computed:    true,
 							CustomType:  customfield.NewNestedObjectType[BetaClusterGPUWorkerNodesLatestRemediationModel](ctx),
 							Attributes: map[string]schema.Attribute{
@@ -680,16 +680,20 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"size_tib": schema.Int64Attribute{
-							Computed: true,
+							Description: "Size of the volume in TiB.",
+							Computed:    true,
 						},
 						"status": schema.StringAttribute{
-							Computed: true,
+							Description: "Current status of the volume.",
+							Computed:    true,
 						},
 						"volume_id": schema.StringAttribute{
-							Computed: true,
+							Description: "ID of the volume.",
+							Computed:    true,
 						},
 						"volume_name": schema.StringAttribute{
-							Computed: true,
+							Description: "User provided name of the volume.",
+							Computed:    true,
 						},
 					},
 				},

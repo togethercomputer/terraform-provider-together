@@ -21,7 +21,8 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				Required:    true,
 			},
 			"size_tib": schema.Int64Attribute{
-				Computed: true,
+				Description: "Size of the volume in TiB.",
+				Computed:    true,
 			},
 			"status": schema.StringAttribute{
 				Description: "Current status of the shared volume.\nAvailable values: \"scheduled\", \"available\", \"bound\", \"provisioning\", \"deleting\", \"failed\", \"access_revoked\", \"unknown\".",
@@ -40,7 +41,8 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				},
 			},
 			"volume_name": schema.StringAttribute{
-				Computed: true,
+				Description: "User provided name of the volume.",
+				Computed:    true,
 			},
 		},
 	}
