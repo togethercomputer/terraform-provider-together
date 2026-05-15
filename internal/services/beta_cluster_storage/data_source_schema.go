@@ -5,8 +5,10 @@ package beta_cluster_storage
 import (
 	"context"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
 var _ datasource.DataSourceWithConfigValidators = (*BetaClusterStorageDataSource)(nil)
@@ -22,7 +24,20 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 				Computed: true,
 			},
 			"status": schema.StringAttribute{
-				Computed: true,
+				Description: "Current status of the shared volume.\nAvailable values: \"scheduled\", \"available\", \"bound\", \"provisioning\", \"deleting\", \"failed\", \"access_revoked\", \"unknown\".",
+				Computed:    true,
+				Validators: []validator.String{
+					stringvalidator.OneOfCaseInsensitive(
+						"scheduled",
+						"available",
+						"bound",
+						"provisioning",
+						"deleting",
+						"failed",
+						"access_revoked",
+						"unknown",
+					),
+				},
 			},
 			"volume_name": schema.StringAttribute{
 				Computed: true,
