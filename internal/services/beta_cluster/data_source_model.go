@@ -104,7 +104,6 @@ type BetaClusterControlPlaneNodesDataSourceModel struct {
 	MemoryGib        types.Float64                                                                             `tfsdk:"memory_gib" json:"memory_gib,computed"`
 	Network          types.String                                                                              `tfsdk:"network" json:"network,computed"`
 	NodeID           types.String                                                                              `tfsdk:"node_id" json:"node_id,computed"`
-	NodeName         types.String                                                                              `tfsdk:"node_name" json:"node_name,computed"`
 	NumCPUCores      types.Int64                                                                               `tfsdk:"num_cpu_cores" json:"num_cpu_cores,computed"`
 	PhaseTransitions customfield.NestedObjectList[BetaClusterControlPlaneNodesPhaseTransitionsDataSourceModel] `tfsdk:"phase_transitions" json:"phase_transitions,computed"`
 	Status           types.String                                                                              `tfsdk:"status" json:"status,computed"`
@@ -120,7 +119,6 @@ type BetaClusterGPUWorkerNodesDataSourceModel struct {
 	MemoryGib           types.Float64                                                                          `tfsdk:"memory_gib" json:"memory_gib,computed"`
 	Networks            customfield.List[types.String]                                                         `tfsdk:"networks" json:"networks,computed"`
 	NodeID              types.String                                                                           `tfsdk:"node_id" json:"node_id,computed"`
-	NodeName            types.String                                                                           `tfsdk:"node_name" json:"node_name,computed"`
 	NumCPUCores         types.Int64                                                                            `tfsdk:"num_cpu_cores" json:"num_cpu_cores,computed"`
 	NumGPUs             types.Int64                                                                            `tfsdk:"num_gpus" json:"num_gpus,computed"`
 	PhaseTransitions    customfield.NestedObjectList[BetaClusterGPUWorkerNodesPhaseTransitionsDataSourceModel] `tfsdk:"phase_transitions" json:"phase_transitions,computed"`

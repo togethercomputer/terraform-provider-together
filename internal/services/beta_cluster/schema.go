@@ -420,9 +420,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 						"node_id": schema.StringAttribute{
 							Computed: true,
 						},
-						"node_name": schema.StringAttribute{
-							Computed: true,
-						},
 						"num_cpu_cores": schema.Int64Attribute{
 							Computed: true,
 						},
@@ -479,9 +476,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 							ElementType: types.StringType,
 						},
 						"node_id": schema.StringAttribute{
-							Computed: true,
-						},
-						"node_name": schema.StringAttribute{
 							Computed: true,
 						},
 						"num_cpu_cores": schema.Int64Attribute{
