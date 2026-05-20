@@ -456,6 +456,10 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 									Description: "Error message if the remediation failed.",
 									Computed:    true,
 								},
+								"instance_name": schema.StringAttribute{
+									Description: "Display name of the targeted instance.",
+									Computed:    true,
+								},
 								"passive_health_check_event_id": schema.StringAttribute{
 									Description: "Passive health check event ID that triggered this remediation.",
 									Computed:    true,
