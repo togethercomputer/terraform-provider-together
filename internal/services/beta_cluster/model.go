@@ -186,6 +186,7 @@ type BetaClusterGPUWorkerNodesLatestRemediationModel struct {
 	CreateTime                timetypes.RFC3339 `tfsdk:"create_time" json:"create_time,computed" format:"date-time"`
 	EndTime                   timetypes.RFC3339 `tfsdk:"end_time" json:"end_time,computed" format:"date-time"`
 	ErrorMessage              types.String      `tfsdk:"error_message" json:"error_message,computed"`
+	InstanceName              types.String      `tfsdk:"instance_name" json:"instance_name,computed"`
 	PassiveHealthCheckEventID types.String      `tfsdk:"passive_health_check_event_id" json:"passive_health_check_event_id,computed"`
 	Reason                    types.String      `tfsdk:"reason" json:"reason,computed"`
 	RequestedBy               types.String      `tfsdk:"requested_by" json:"requested_by,computed"`
