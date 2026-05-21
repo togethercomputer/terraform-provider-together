@@ -13,7 +13,7 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.10.0
 	github.com/tidwall/gjson v1.18.0
 	github.com/tidwall/sjson v1.2.5
-	github.com/togethercomputer/together-go v0.9.0
+	github.com/togethercomputer/together-go v0.10.0
 )
 
 require (
