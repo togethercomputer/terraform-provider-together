@@ -1,6 +1,6 @@
 # Together Terraform Provider
 
-The [Together Terraform provider](https://registry.terraform.io/providers/stainless-sdks/together/latest/docs) provides convenient access to
+The [Together Terraform provider](https://registry.terraform.io/providers/togethercomputer/together/latest/docs) provides convenient access to
 the [Together REST API](https://docs.together.ai/) from Terraform.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -14,13 +14,15 @@ on Hashicorp's website.
 
 Add the following to your `main.tf` file:
 
+<!-- x-release-please-start-version -->
+
 ```hcl
 # Declare the provider and version
 terraform {
   required_providers {
     together = {
-      source  = "stainless-sdks/together"
-      version = "~> 0.0.1"
+      source  = "togethercomputer/together"
+      version = "~> 0.1.0"
     }
   }
 }
@@ -32,27 +34,88 @@ provider "together" {
 
 # Configure a resource
 resource "together_beta_cluster" "example_beta_cluster" {
-  billing_type = "RESERVED"
   cluster_name = "cluster_name"
-  driver_version = "CUDA_12_5_555"
+  cuda_version = "cuda_version"
   gpu_type = "H100_SXM"
   num_gpus = 0
-  region = "us-central-8"
-  cluster_type = "KUBERNETES"
-  duration_days = 0
-  shared_volume = {
-    region = "region"
-    size_tib = 0
-    volume_name = "volume_name"
+  nvidia_driver_version = "nvidia_driver_version"
+  region = "region"
+  acceptance_tests_params = {
+    dcgm_diag_level = "DCGM_DIAG_LEVEL_SHORT"
+    dcgm_diag_skipped = true
+    enabled = true
+    gpu_burn_duration = 0
+    gpu_burn_skipped = true
+    nccl_multi_node_skipped = true
+    nccl_single_node_skipped = true
   }
+  add_ons = [{
+    add_on_type = "add_on_type"
+    name = "name"
+    config = {
+      dashboard = {
+        enabled = true
+      }
+      ingress = {
+        enabled = true
+      }
+    }
+  }]
+  auto_scale = true
+  auto_scale_max_gpus = 0
+  auto_scaled = true
+  capacity_pool_id = "capacity_pool_id"
+  cluster_config = {
+    load_balancer = "NONE"
+    gpu_operator_version = "gpu_operator_version"
+    ingress = {
+      enabled = true
+    }
+    jumphost_enabled = true
+    kubernetes_dashboard_enabled = true
+    observability = {
+      enabled = true
+    }
+    slurm_startup_scripts = {
+      controller_epilog = "controller_epilog"
+      controller_prolog = "controller_prolog"
+      extra_slurm_conf = "extra_slurm_conf"
+      login_init_script = "login_init_script"
+      nodeset_init_script = "nodeset_init_script"
+      worker_epilog = "worker_epilog"
+      worker_prolog = "worker_prolog"
+    }
+  }
+  cluster_type = "KUBERNETES"
+  gpu_node_failover_enabled = true
+  install_traefik = true
+  num_capacity_pool_gpus = 0
+  num_preemptible_gpus = 0
+  num_reserved_gpus = 0
+  oidc_config = {
+    client_id = "client_id"
+    group_claim = "group_claim"
+    group_prefix = "group_prefix"
+    issuer_url = "issuer_url"
+    username_claim = "username_claim"
+    username_prefix = "username_prefix"
+    ca_cert = "ca_cert"
+  }
+  project_id = "project_id"
+  reservation_end_time = "2019-12-27T18:11:19.117Z"
+  reservation_start_time = "2019-12-27T18:11:19.117Z"
+  slurm_image = "slurm_image"
+  slurm_shm_size_gib = 0
   volume_id = "volume_id"
 }
 ```
 
+<!-- x-release-please-end -->
+
 Initialize your project by running `terraform init` in the directory.
 
 Additional examples can be found in the [./examples](./examples) folder within this repository, and you can
-refer to the full documentation on [the Terraform Registry](https://registry.terraform.io/providers/stainless-sdks/together/latest/docs).
+refer to the full documentation on [the Terraform Registry](https://registry.terraform.io/providers/togethercomputer/together/latest/docs).
 
 ### Provider Options
 
@@ -72,7 +135,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/togetherai-terraform/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/togethercomputer/terraform-provider-together/issues) with questions, bugs, or suggestions.
 
 ## Contributing
 

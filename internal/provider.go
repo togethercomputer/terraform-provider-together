@@ -12,8 +12,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/beta_cluster"
-	"github.com/stainless-sdks/togetherai-terraform/internal/services/beta_cluster_storage"
+	"github.com/togethercomputer/terraform-provider-together/internal/services/beta_cluster"
+	"github.com/togethercomputer/terraform-provider-together/internal/services/beta_cluster_storage"
 	"github.com/togethercomputer/together-go"
 	"github.com/togethercomputer/together-go/option"
 )
