@@ -1,28 +1,44 @@
 name: CI
 on:
   push:
-    branches-ignore:
-      - 'generated'
-      - 'codegen/**'
-      - 'integrated/**'
-      - 'stl-preview-head/**'
-      - 'stl-preview-base/**'
+    branches:
+      - '**'
+      - '!integrated/**'
+      - '!stl-preview-head/**'
+      - '!stl-preview-base/**'
+      - '!generated'
+      - '!codegen/**'
+      - 'codegen/stl/**'
   pull_request:
     branches-ignore:
       - 'stl-preview-head/**'
       - 'stl-preview-base/**'
 
+env:
+  GOPRIVATE: github.com/togethercomputer/together-go,github.com/togethercomputer/together-go-staging
+
 jobs:
   lint:
-    runs-on: ${{ github.repository == 'stainless-sdks/togetherai-terraform' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Setup go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: ./go.mod
+      # If your Go SDK repo is private, uncomment the step below and add a
+      # fine-grained GitHub PAT with `Contents: Read` on the Go SDK repo
+      # as a secret named `GO_REPO_READ_TOKEN` in this repo. Apply this
+      # edit as custom code so stlc preserves it across regenerations.
+      # - name: Authenticate git for the private Go SDK repo
+      #   shell: bash
+      #   env:
+      #     GO_MODULE_REPO: ${{ github.repository == 'togethercomputer/terraform-provider-together-staging' && 'togethercomputer/together-go-staging' || 'togethercomputer/together-go' }}
+      #   run: git config --global url."https://x-access-token:${{ secrets.GO_REPO_READ_TOKEN }}@github.com/${GO_MODULE_REPO}".insteadOf "https://github.com/${GO_MODULE_REPO}"
+      - uses: ./.github/actions/setup-go
+
+      - name: Link staging branch
+        if: github.repository == 'togethercomputer/terraform-provider-together-staging'
+        run: |
+          ./scripts/link 'github.com/togethercomputer/together-go-staging@${{ github.ref_name }}' || true
 
       - name: Bootstrap
         run: ./scripts/bootstrap
@@ -31,15 +47,26 @@ jobs:
         run: ./scripts/lint
 
   test:
-    runs-on: ${{ github.repository == 'stainless-sdks/togetherai-terraform' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Setup go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: ./go.mod
+      # If your Go SDK repo is private, uncomment the step below and add a
+      # fine-grained GitHub PAT with `Contents: Read` on the Go SDK repo
+      # as a secret named `GO_REPO_READ_TOKEN` in this repo. Apply this
+      # edit as custom code so stlc preserves it across regenerations.
+      # - name: Authenticate git for the private Go SDK repo
+      #   shell: bash
+      #   env:
+      #     GO_MODULE_REPO: ${{ github.repository == 'togethercomputer/terraform-provider-together-staging' && 'togethercomputer/together-go-staging' || 'togethercomputer/together-go' }}
+      #   run: git config --global url."https://x-access-token:${{ secrets.GO_REPO_READ_TOKEN }}@github.com/${GO_MODULE_REPO}".insteadOf "https://github.com/${GO_MODULE_REPO}"
+      - uses: ./.github/actions/setup-go
+
+      - name: Link staging branch
+        if: github.repository == 'togethercomputer/terraform-provider-together-staging'
+        run: |
+          ./scripts/link 'github.com/togethercomputer/together-go-staging@${{ github.ref_name }}' || true
 
       - name: Bootstrap
         run: ./scripts/bootstrap

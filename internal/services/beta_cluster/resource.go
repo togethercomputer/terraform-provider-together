@@ -10,9 +10,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/stainless-sdks/togetherai-terraform/internal/apijson"
-	"github.com/stainless-sdks/togetherai-terraform/internal/importpath"
-	"github.com/stainless-sdks/togetherai-terraform/internal/logging"
+	"github.com/togethercomputer/terraform-provider-together/internal/apijson"
+	"github.com/togethercomputer/terraform-provider-together/internal/importpath"
+	"github.com/togethercomputer/terraform-provider-together/internal/logging"
 	"github.com/togethercomputer/together-go"
 	"github.com/togethercomputer/together-go/option"
 )
@@ -63,7 +63,15 @@ func (r *BetaClusterResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	dataBytes, err := data.MarshalJSON()
+	// <CustomCode>
+	// For Terraform to be stateful with Instant Clusters, we force the billing type to be ON_DEMAND.
+	var dataWithOnDemandBillingType = InternalBetaClusterModel{
+		BetaClusterModel: *data,
+		BillingType: types.StringValue("ON_DEMAND"),
+	}
+
+	dataBytes, err := dataWithOnDemandBillingType.MarshalJSON()
+	// </CustomCode>
 	if err != nil {
 		resp.Diagnostics.AddError("failed to serialize http request", err.Error())
 		return
