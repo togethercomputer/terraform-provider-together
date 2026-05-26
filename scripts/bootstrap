@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ] && [ "$SKIP_BREW" != "1" ] && [ -t 0 ]; then
+if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ] && [ "${SKIP_BREW:-}" != "1" ] && [ -t 0 ]; then
   brew bundle check >/dev/null 2>&1 || {
     echo -n "==> Install Homebrew dependencies? (y/N): "
     read -r response
@@ -19,10 +19,8 @@ if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ] && [ "$SKIP_BREW" != "1" ] 
   }
 fi
 
+# Mark the necessary Go modules as private to avoid Go's proxy
+export GOPRIVATE="${GOPRIVATE:+$GOPRIVATE,}github.com/togethercomputer/together-go,github.com/togethercomputer/together-go-staging"
+
 echo "==> Installing Go dependencies…"
-# Set GOPRIVATE if the repository appears to be private
-REPO_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://github.com/togethercomputer/together-go)
-if [ "$REPO_STATUS" = "404" ]; then
-  export GOPRIVATE=github.com/togethercomputer/together-go
-fi
 go mod tidy -e || true

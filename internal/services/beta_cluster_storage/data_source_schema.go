@@ -17,24 +17,32 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 	return schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"volume_id": schema.StringAttribute{
-				Required: true,
+				Description: "The ID of the volume to retrieve",
+				Required:    true,
 			},
 			"size_tib": schema.Int64Attribute{
-				Computed: true,
+				Description: "Size of the volume in TiB.",
+				Computed:    true,
 			},
 			"status": schema.StringAttribute{
-				Description: `Available values: "available", "bound", "provisioning".`,
+				Description: "Current status of the shared volume.\nAvailable values: \"scheduled\", \"available\", \"bound\", \"provisioning\", \"deleting\", \"failed\", \"access_revoked\", \"unknown\".",
 				Computed:    true,
 				Validators: []validator.String{
 					stringvalidator.OneOfCaseInsensitive(
+						"scheduled",
 						"available",
 						"bound",
 						"provisioning",
+						"deleting",
+						"failed",
+						"access_revoked",
+						"unknown",
 					),
 				},
 			},
 			"volume_name": schema.StringAttribute{
-				Computed: true,
+				Description: "User provided name of the volume.",
+				Computed:    true,
 			},
 		},
 	}

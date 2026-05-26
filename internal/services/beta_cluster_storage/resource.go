@@ -10,12 +10,11 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/stainless-sdks/togetherai-terraform/internal/apijson"
-	"github.com/stainless-sdks/togetherai-terraform/internal/importpath"
-	"github.com/stainless-sdks/togetherai-terraform/internal/logging"
+	"github.com/togethercomputer/terraform-provider-together/internal/apijson"
+	"github.com/togethercomputer/terraform-provider-together/internal/importpath"
+	"github.com/togethercomputer/terraform-provider-together/internal/logging"
 	"github.com/togethercomputer/together-go"
 	"github.com/togethercomputer/together-go/option"
-	"github.com/togethercomputer/together-go/packages/param"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -110,7 +109,7 @@ func (r *BetaClusterStorageResource) Update(ctx context.Context, req resource.Up
 	}
 
 	params := together.BetaClusterStorageUpdateParams{
-		VolumeID: param.NewOpt(data.VolumeID.ValueString()),
+		VolumeID: data.VolumeID.ValueString(),
 	}
 
 	dataBytes, err := data.MarshalJSONForUpdate(*state)
