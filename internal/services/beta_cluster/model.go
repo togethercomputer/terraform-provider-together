@@ -56,6 +56,18 @@ func (m BetaClusterModel) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(m)
 }
 
+// <CustomCode>
+// For Terraform to be stateful with Instant Clusters, we force the billing type to be ON_DEMAND.
+type InternalBetaClusterModel struct {
+	BetaClusterModel
+	BillingType       types.String                                                    `tfsdk:"billing_type" json:"billing_type,required,no_refresh"`
+}
+
+func (m InternalBetaClusterModel) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(m)
+}
+// </CustomCode>
+
 func (m BetaClusterModel) MarshalJSONForUpdate(state BetaClusterModel) (data []byte, err error) {
 	return apijson.MarshalForUpdate(m, state)
 }
