@@ -63,15 +63,7 @@ func (r *BetaClusterResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	// <CustomCode>
-	// For Terraform to be stateful with Instant Clusters, we force the billing type to be ON_DEMAND.
-	var dataWithOnDemandBillingType = InternalBetaClusterModel{
-		BetaClusterModel: *data,
-		BillingType: types.StringValue("ON_DEMAND"),
-	}
-
-	dataBytes, err := dataWithOnDemandBillingType.MarshalJSON()
-	// </CustomCode>
+	dataBytes, err := data.MarshalJSON()
 	if err != nil {
 		resp.Diagnostics.AddError("failed to serialize http request", err.Error())
 		return
