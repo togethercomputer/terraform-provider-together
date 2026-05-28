@@ -29,7 +29,6 @@ type BetaClusterModel struct {
 	AcceptanceTestsParams    *BetaClusterAcceptanceTestsParamsModel                          `tfsdk:"acceptance_tests_params" json:"acceptance_tests_params,optional,no_refresh"`
 	OidcConfig               *BetaClusterOidcConfigModel                                     `tfsdk:"oidc_config" json:"oidc_config,optional"`
 	AutoScaled               types.Bool                                                      `tfsdk:"auto_scaled" json:"auto_scaled,computed_optional,no_refresh"`
-	GPUNodeFailoverEnabled   types.Bool                                                      `tfsdk:"gpu_node_failover_enabled" json:"gpu_node_failover_enabled,computed_optional,no_refresh"`
 	InstallTraefik           types.Bool                                                      `tfsdk:"install_traefik" json:"install_traefik,computed_optional"`
 	NumGPUs                  types.Int64                                                     `tfsdk:"num_gpus" json:"num_gpus,required"`
 	ClusterType              types.String                                                    `tfsdk:"cluster_type" json:"cluster_type,optional"`

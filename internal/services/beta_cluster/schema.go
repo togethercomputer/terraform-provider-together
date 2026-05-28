@@ -199,13 +199,6 @@ func ResourceSchema(ctx context.Context) schema.Schema {
 				PlanModifiers:      []planmodifier.Bool{boolplanmodifier.RequiresReplaceIfConfigured()},
 				Default:            booldefault.StaticBool(false),
 			},
-			"gpu_node_failover_enabled": schema.BoolAttribute{
-				Description:   "Whether automated GPU node failover should be enabled for this cluster. By default, it is disabled.",
-				Computed:      true,
-				Optional:      true,
-				PlanModifiers: []planmodifier.Bool{boolplanmodifier.RequiresReplaceIfConfigured()},
-				Default:       booldefault.StaticBool(false),
-			},
 			"install_traefik": schema.BoolAttribute{
 				Description:   "Whether to install Traefik ingress controller in the cluster. This field is only applicable for Kubernetes clusters and is false by default.",
 				Computed:      true,

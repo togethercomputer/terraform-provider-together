@@ -87,7 +87,6 @@ resource "together_beta_cluster" "example_beta_cluster" {
     }
   }
   cluster_type = "KUBERNETES"
-  gpu_node_failover_enabled = true
   install_traefik = true
   num_capacity_pool_gpus = 0
   num_preemptible_gpus = 0
