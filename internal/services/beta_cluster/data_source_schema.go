@@ -51,6 +51,10 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 					stringvalidator.OneOfCaseInsensitive("KUBERNETES", "SLURM"),
 				},
 			},
+			"control_plane_ready": schema.BoolAttribute{
+				Description: "Whether the control plane is currently ready.",
+				Computed:    true,
+			},
 			"created_at": schema.StringAttribute{
 				Computed:   true,
 				CustomType: timetypes.RFC3339Type{},
@@ -64,6 +68,11 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			},
 			"duration_hours": schema.Int64Attribute{
 				Computed: true,
+			},
+			"first_ready_at": schema.StringAttribute{
+				Description: "Timestamp when the cluster first reached the Ready phase.",
+				Computed:    true,
+				CustomType:  timetypes.RFC3339Type{},
 			},
 			"gpu_type": schema.StringAttribute{
 				Description: `Available values: "H100_SXM", "H200_SXM", "RTX_6000_PCI", "L40_PCIE", "B200_SXM", "H100_SXM_INF".`,
@@ -82,8 +91,16 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			"install_traefik": schema.BoolAttribute{
 				Computed: true,
 			},
+			"is_in_substrate": schema.BoolAttribute{
+				Description: "Whether the cluster is managed inside a substrate environment.",
+				Computed:    true,
+			},
 			"kube_config": schema.StringAttribute{
 				Computed: true,
+			},
+			"machine_cluster_id": schema.StringAttribute{
+				Description: "ID of the machine cluster backing this GPU cluster.",
+				Computed:    true,
 			},
 			"num_cpu_workers": schema.Int64Attribute{
 				Description: "Number of CPU-only worker nodes in the cluster.",
@@ -94,6 +111,14 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 			},
 			"nvidia_driver_version": schema.StringAttribute{
 				Computed: true,
+			},
+			"nvidia_driver_version_id": schema.StringAttribute{
+				Description: "Internal NVIDIA version ID for this cluster's driver and CUDA combination.",
+				Computed:    true,
+			},
+			"os_image": schema.StringAttribute{
+				Description: "Data-volume image name for GPU worker nodes.",
+				Computed:    true,
 			},
 			"project_id": schema.StringAttribute{
 				Computed: true,
@@ -130,6 +155,14 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						"Deleting",
 					),
 				},
+			},
+			"ums_org_id": schema.StringAttribute{
+				Description: "UMS organization ID associated with this cluster.",
+				Computed:    true,
+			},
+			"ums_project_id": schema.StringAttribute{
+				Description: "UMS project ID associated with this cluster.",
+				Computed:    true,
 			},
 			"add_ons": schema.ListNestedAttribute{
 				Description: "Enabled add-ons on this cluster. Only add-ons with enabled=true in their config are returned.",
@@ -320,6 +353,10 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						"status": schema.StringAttribute{
 							Computed: true,
 						},
+						"public_ipv4": schema.StringAttribute{
+							Description: "Public IPv4 address of the control plane node.",
+							Computed:    true,
+						},
 					},
 				},
 			},
@@ -380,6 +417,22 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 						},
 						"status": schema.StringAttribute{
 							Computed: true,
+						},
+						"auto_remediation_enabled": schema.BoolAttribute{
+							Description: "Whether auto-remediation is enabled for this node's instance.",
+							Computed:    true,
+						},
+						"ephemeral_storage": schema.StringAttribute{
+							Description: "Ephemeral storage size, such as 1Ti.",
+							Computed:    true,
+						},
+						"ib_hca_count": schema.Int64Attribute{
+							Description: "Number of InfiniBand HCAs.",
+							Computed:    true,
+						},
+						"ib_hca_type": schema.StringAttribute{
+							Description: "InfiniBand HCA type.",
+							Computed:    true,
 						},
 						"instance_id": schema.StringAttribute{
 							Computed: true,
@@ -490,6 +543,22 @@ func DataSourceSchema(ctx context.Context) schema.Schema {
 									CustomType:  timetypes.RFC3339Type{},
 								},
 							},
+						},
+						"marked_for_deletion": schema.BoolAttribute{
+							Description: "Whether this node is marked for deletion by the operator.",
+							Computed:    true,
+						},
+						"nvswitch_count": schema.Int64Attribute{
+							Description: "Number of NVSwitches.",
+							Computed:    true,
+						},
+						"nvswitch_type": schema.StringAttribute{
+							Description: "NVSwitch type.",
+							Computed:    true,
+						},
+						"public_ipv4": schema.StringAttribute{
+							Description: "Public IPv4 address of the GPU worker node.",
+							Computed:    true,
 						},
 						"slurm_worker_hostname": schema.StringAttribute{
 							Computed: true,
