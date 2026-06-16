@@ -23,40 +23,16 @@ jobs:
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        # Don't persist the default GITHUB_TOKEN as a global github.com auth
-        # header — it's scoped only to this repo and would shadow the minted
-        # app token when fetching the private Go SDK repo.
-        with:
-          persist-credentials: false
-
-      - name: Mint STLC app token (scoped to SDK staging repos)
-        id: app-token
-        uses: actions/create-github-app-token@v3
-        with:
-          client-id: ${{ secrets.STLC_WORKFLOW_APP_CLIENT_ID }}
-          private-key: ${{ secrets.STLC_WORKFLOW_APP_PRIVATE_KEY }}
-          owner: togethercomputer
-          repositories: together-go-staging
-
-      - name: Configure auth for github
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          git config --global user.name  "stlc-workflow-app[bot]"
-          git config --global user.email "287504455+stlc-workflow-app[bot]@users.noreply.github.com"
-          gh auth setup-git
 
       # If your Go SDK repo is private, uncomment the step below and add a
       # fine-grained GitHub PAT with `Contents: Read` on the Go SDK repo
       # as a secret named `GO_REPO_READ_TOKEN` in this repo. Apply this
       # edit as custom code so stlc preserves it across regenerations.
-      - name: Authenticate git for the private Go SDK repo
-        shell: bash
-        env:
-          GO_REPO_READ_TOKEN: ${{ steps.app-token.outputs.token }}
-          GO_MODULE_REPO: ${{ github.repository == 'togethercomputer/terraform-provider-together-staging' && 'togethercomputer/together-go-staging' || 'togethercomputer/together-go' }}
-        run: git config --global url."https://x-access-token:${GO_REPO_READ_TOKEN}@github.com/${GO_MODULE_REPO}".insteadOf "https://github.com/${GO_MODULE_REPO}"
-
+      # - name: Authenticate git for the private Go SDK repo
+      #   shell: bash
+      #   env:
+      #     GO_MODULE_REPO: ${{ github.repository == 'togethercomputer/terraform-provider-together-staging' && 'togethercomputer/together-go-staging' || 'togethercomputer/together-go' }}
+      #   run: git config --global url."https://x-access-token:${{ secrets.GO_REPO_READ_TOKEN }}@github.com/${GO_MODULE_REPO}".insteadOf "https://github.com/${GO_MODULE_REPO}"
       - uses: ./.github/actions/setup-go
 
       - name: Link staging branch
@@ -75,40 +51,16 @@ jobs:
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        # Don't persist the default GITHUB_TOKEN as a global github.com auth
-        # header — it's scoped only to this repo and would shadow the minted
-        # app token when fetching the private Go SDK repo.
-        with:
-          persist-credentials: false
-
-      - name: Mint STLC app token (scoped to SDK staging repos)
-        id: app-token
-        uses: actions/create-github-app-token@v3
-        with:
-          client-id: ${{ secrets.STLC_WORKFLOW_APP_CLIENT_ID }}
-          private-key: ${{ secrets.STLC_WORKFLOW_APP_PRIVATE_KEY }}
-          owner: togethercomputer
-          repositories: together-go-staging
-
-      - name: Configure auth for github
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          git config --global user.name  "stlc-workflow-app[bot]"
-          git config --global user.email "287504455+stlc-workflow-app[bot]@users.noreply.github.com"
-          gh auth setup-git
 
       # If your Go SDK repo is private, uncomment the step below and add a
       # fine-grained GitHub PAT with `Contents: Read` on the Go SDK repo
       # as a secret named `GO_REPO_READ_TOKEN` in this repo. Apply this
       # edit as custom code so stlc preserves it across regenerations.
-      - name: Authenticate git for the private Go SDK repo
-        shell: bash
-        env:
-          GO_REPO_READ_TOKEN: ${{ steps.app-token.outputs.token }}
-          GO_MODULE_REPO: ${{ github.repository == 'togethercomputer/terraform-provider-together-staging' && 'togethercomputer/together-go-staging' || 'togethercomputer/together-go' }}
-        run: git config --global url."https://x-access-token:${GO_REPO_READ_TOKEN}@github.com/${GO_MODULE_REPO}".insteadOf "https://github.com/${GO_MODULE_REPO}"
-
+      # - name: Authenticate git for the private Go SDK repo
+      #   shell: bash
+      #   env:
+      #     GO_MODULE_REPO: ${{ github.repository == 'togethercomputer/terraform-provider-together-staging' && 'togethercomputer/together-go-staging' || 'togethercomputer/together-go' }}
+      #   run: git config --global url."https://x-access-token:${{ secrets.GO_REPO_READ_TOKEN }}@github.com/${GO_MODULE_REPO}".insteadOf "https://github.com/${GO_MODULE_REPO}"
       - uses: ./.github/actions/setup-go
 
       - name: Link staging branch
