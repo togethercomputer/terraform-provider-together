@@ -29,7 +29,6 @@ type BetaClusterModel struct {
 	AcceptanceTestsParams    *BetaClusterAcceptanceTestsParamsModel                          `tfsdk:"acceptance_tests_params" json:"acceptance_tests_params,optional,no_refresh"`
 	OidcConfig               *BetaClusterOidcConfigModel                                     `tfsdk:"oidc_config" json:"oidc_config,optional"`
 	AutoScaled               types.Bool                                                      `tfsdk:"auto_scaled" json:"auto_scaled,computed_optional,no_refresh"`
-	GPUNodeFailoverEnabled   types.Bool                                                      `tfsdk:"gpu_node_failover_enabled" json:"gpu_node_failover_enabled,computed_optional,no_refresh"`
 	InstallTraefik           types.Bool                                                      `tfsdk:"install_traefik" json:"install_traefik,computed_optional"`
 	NumGPUs                  types.Int64                                                     `tfsdk:"num_gpus" json:"num_gpus,required"`
 	ClusterType              types.String                                                    `tfsdk:"cluster_type" json:"cluster_type,optional"`
@@ -40,12 +39,20 @@ type BetaClusterModel struct {
 	ClusterConfig            *BetaClusterClusterConfigModel                                  `tfsdk:"cluster_config" json:"cluster_config,optional"`
 	AllocatedPreemptibleGPUs types.Int64                                                     `tfsdk:"allocated_preemptible_gpus" json:"allocated_preemptible_gpus,computed"`
 	BillingType              types.String                                                    `tfsdk:"billing_type" json:"billing_type,computed"`
+	ControlPlaneReady        types.Bool                                                      `tfsdk:"control_plane_ready" json:"control_plane_ready,computed"`
 	CreatedAt                timetypes.RFC3339                                               `tfsdk:"created_at" json:"created_at,computed" format:"date-time"`
 	DesiredPreemptibleGPUs   types.Int64                                                     `tfsdk:"desired_preemptible_gpus" json:"desired_preemptible_gpus,computed"`
 	DurationHours            types.Int64                                                     `tfsdk:"duration_hours" json:"duration_hours,computed"`
+	FirstReadyAt             timetypes.RFC3339                                               `tfsdk:"first_ready_at" json:"first_ready_at,computed" format:"date-time"`
+	IsInSubstrate            types.Bool                                                      `tfsdk:"is_in_substrate" json:"is_in_substrate,computed"`
 	KubeConfig               types.String                                                    `tfsdk:"kube_config" json:"kube_config,computed"`
+	MachineClusterID         types.String                                                    `tfsdk:"machine_cluster_id" json:"machine_cluster_id,computed"`
 	NumCPUWorkers            types.Int64                                                     `tfsdk:"num_cpu_workers" json:"num_cpu_workers,computed"`
+	NvidiaDriverVersionID    types.String                                                    `tfsdk:"nvidia_driver_version_id" json:"nvidia_driver_version_id,computed"`
+	OsImage                  types.String                                                    `tfsdk:"os_image" json:"os_image,computed"`
 	Status                   types.String                                                    `tfsdk:"status" json:"status,computed"`
+	UmsOrgID                 types.String                                                    `tfsdk:"ums_org_id" json:"ums_org_id,computed"`
+	UmsProjectID             types.String                                                    `tfsdk:"ums_project_id" json:"ums_project_id,computed"`
 	ControlPlaneNodes        customfield.NestedObjectList[BetaClusterControlPlaneNodesModel] `tfsdk:"control_plane_nodes" json:"control_plane_nodes,computed"`
 	GPUWorkerNodes           customfield.NestedObjectList[BetaClusterGPUWorkerNodesModel]    `tfsdk:"gpu_worker_nodes" json:"gpu_worker_nodes,computed"`
 	PhaseTransitions         customfield.NestedObjectList[BetaClusterPhaseTransitionsModel]  `tfsdk:"phase_transitions" json:"phase_transitions,computed"`
@@ -147,6 +154,7 @@ type BetaClusterControlPlaneNodesModel struct {
 	NumCPUCores      types.Int64                                                                     `tfsdk:"num_cpu_cores" json:"num_cpu_cores,computed"`
 	PhaseTransitions customfield.NestedObjectList[BetaClusterControlPlaneNodesPhaseTransitionsModel] `tfsdk:"phase_transitions" json:"phase_transitions,computed"`
 	Status           types.String                                                                    `tfsdk:"status" json:"status,computed"`
+	PublicIpv4       types.String                                                                    `tfsdk:"public_ipv4" json:"public_ipv4,computed"`
 }
 
 type BetaClusterControlPlaneNodesPhaseTransitionsModel struct {
@@ -155,17 +163,25 @@ type BetaClusterControlPlaneNodesPhaseTransitionsModel struct {
 }
 
 type BetaClusterGPUWorkerNodesModel struct {
-	HostName            types.String                                                                 `tfsdk:"host_name" json:"host_name,computed"`
-	MemoryGib           types.Float64                                                                `tfsdk:"memory_gib" json:"memory_gib,computed"`
-	Networks            customfield.List[types.String]                                               `tfsdk:"networks" json:"networks,computed"`
-	NodeID              types.String                                                                 `tfsdk:"node_id" json:"node_id,computed"`
-	NumCPUCores         types.Int64                                                                  `tfsdk:"num_cpu_cores" json:"num_cpu_cores,computed"`
-	NumGPUs             types.Int64                                                                  `tfsdk:"num_gpus" json:"num_gpus,computed"`
-	PhaseTransitions    customfield.NestedObjectList[BetaClusterGPUWorkerNodesPhaseTransitionsModel] `tfsdk:"phase_transitions" json:"phase_transitions,computed"`
-	Status              types.String                                                                 `tfsdk:"status" json:"status,computed"`
-	InstanceID          types.String                                                                 `tfsdk:"instance_id" json:"instance_id,computed"`
-	LatestRemediation   customfield.NestedObject[BetaClusterGPUWorkerNodesLatestRemediationModel]    `tfsdk:"latest_remediation" json:"latest_remediation,computed"`
-	SlurmWorkerHostname types.String                                                                 `tfsdk:"slurm_worker_hostname" json:"slurm_worker_hostname,computed"`
+	HostName               types.String                                                                 `tfsdk:"host_name" json:"host_name,computed"`
+	MemoryGib              types.Float64                                                                `tfsdk:"memory_gib" json:"memory_gib,computed"`
+	Networks               customfield.List[types.String]                                               `tfsdk:"networks" json:"networks,computed"`
+	NodeID                 types.String                                                                 `tfsdk:"node_id" json:"node_id,computed"`
+	NumCPUCores            types.Int64                                                                  `tfsdk:"num_cpu_cores" json:"num_cpu_cores,computed"`
+	NumGPUs                types.Int64                                                                  `tfsdk:"num_gpus" json:"num_gpus,computed"`
+	PhaseTransitions       customfield.NestedObjectList[BetaClusterGPUWorkerNodesPhaseTransitionsModel] `tfsdk:"phase_transitions" json:"phase_transitions,computed"`
+	Status                 types.String                                                                 `tfsdk:"status" json:"status,computed"`
+	AutoRemediationEnabled types.Bool                                                                   `tfsdk:"auto_remediation_enabled" json:"auto_remediation_enabled,computed"`
+	EphemeralStorage       types.String                                                                 `tfsdk:"ephemeral_storage" json:"ephemeral_storage,computed"`
+	IbHcaCount             types.Int64                                                                  `tfsdk:"ib_hca_count" json:"ib_hca_count,computed"`
+	IbHcaType              types.String                                                                 `tfsdk:"ib_hca_type" json:"ib_hca_type,computed"`
+	InstanceID             types.String                                                                 `tfsdk:"instance_id" json:"instance_id,computed"`
+	LatestRemediation      customfield.NestedObject[BetaClusterGPUWorkerNodesLatestRemediationModel]    `tfsdk:"latest_remediation" json:"latest_remediation,computed"`
+	MarkedForDeletion      types.Bool                                                                   `tfsdk:"marked_for_deletion" json:"marked_for_deletion,computed"`
+	NvswitchCount          types.Int64                                                                  `tfsdk:"nvswitch_count" json:"nvswitch_count,computed"`
+	NvswitchType           types.String                                                                 `tfsdk:"nvswitch_type" json:"nvswitch_type,computed"`
+	PublicIpv4             types.String                                                                 `tfsdk:"public_ipv4" json:"public_ipv4,computed"`
+	SlurmWorkerHostname    types.String                                                                 `tfsdk:"slurm_worker_hostname" json:"slurm_worker_hostname,computed"`
 }
 
 type BetaClusterGPUWorkerNodesPhaseTransitionsModel struct {
